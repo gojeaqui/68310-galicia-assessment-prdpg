@@ -29,7 +29,7 @@ check_definition:
     remediation_text: "El cliente debe ajustar la configuración a un valor igual o inferior al MTU de la red física."
   - key: "changes_recommended01"
     scenario_description_short_text: "Ajuste de MTU recomendado para OVN-Kubernetes."
-    description_long_text: "El tipo de red del clúster está configurado como OVN-Kubernetes.El MTU del clúster debe establecerse en 100 menos que el valor MTU de hardware más bajo en su clúster."
+    description_long_text: "El tipo de red del clúster está configurado como OVN-Kubernetes. El MTU del clúster debe establecerse en 100 menos que el valor MTU de hardware más bajo en su clúster."
     impact_and_risk_text: "Posibles problemas de rendimiento si no se ajusta."
     remediation_text: "Ajuste la MTU del clúster para que sea 100 menos que la MTU de hardware más baja."
   - key: "changes_recommended02"
@@ -51,35 +51,41 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    
-    [openshift@bastion ~]$ oc describe network.config cluster
-    Name:         cluster
-    Namespace:    
-    Labels:       <none>
-    Annotations:  <none>
-    API Version:  config.openshift.io/v1
-    Kind:         Network
-    Metadata:
-      Creation Timestamp:  2022-08-24T17:34:58Z
-      Generation:          6
-      Resource Version:    960068894
-      UID:                 fffa9a3b-7e35-4c69-be95-22481a7866c6
-    Spec:
-      Cluster Network:
-        Cidr:         10.168.0.0/14
-        Host Prefix:  23
-      External IP:
-        Policy:
-      Network Type:  OVNKubernetes
-      Service Network:
-        172.60.0.0/16
-    Status:
-      Cluster Network:
-        Cidr:               10.168.0.0/14
-        Host Prefix:        23
-      Cluster Network MTU:  1400
-      Network Type:         OVNKubernetes
-      Service Network:
-        172.60.0.0/16
-    Events:  <none>
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get network.config cluster -o yaml
+    apiVersion: config.openshift.io/v1
+    kind: Network
+    metadata:
+      creationTimestamp: "2026-06-30T16:28:29Z"
+      generation: 6
+      name: cluster
+      resourceVersion: "26713353"
+      uid: c0ccb665-80db-4d18-8920-64cff98b4acc
+    spec:
+      clusterNetwork:
+      - cidr: 10.128.0.0/18
+        hostPrefix: 24
+      externalIP:
+        policy: {}
+      networkDiagnostics:
+        mode: ""
+        sourcePlacement: {}
+        targetPlacement: {}
+      networkType: OVNKubernetes
+      serviceNetwork:
+      - 172.30.0.0/16
+    status:
+      clusterNetwork:
+      - cidr: 10.128.0.0/18
+        hostPrefix: 24
+      clusterNetworkMTU: 1400
+      conditions:
+      - lastTransitionTime: "2026-08-07T16:10:50Z"
+        message: ""
+        observedGeneration: 0
+        reason: AsExpected
+        status: "True"
+        type: NetworkDiagnosticsAvailable
+      networkType: OVNKubernetes
+      serviceNetwork:
+      - 172.30.0.0/16
     ---
