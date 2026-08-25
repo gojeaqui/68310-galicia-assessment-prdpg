@@ -23,15 +23,15 @@ check_definition:
       question: "Are there any monitoring or alerting mechanisms in place for the ingress shards?"
   common_outcomes:
     - key: "advisory01"
-      scenario_description_short_text: "Information Only"
+      scenario_description_short_text: "Hay un Ingress Sharding configurado"
       description_long_text: ""  # Consultant to fill out ingress sharding details
       impact_and_risk_text: ""
       remediation_text: ""
     - key: "no_change01"
-      scenario_description_short_text: "Ingress sharding is appropriately configured."
-      description_long_text: "The current ingress sharding configuration meets the requirements of the workload."
-      impact_and_risk_text: "None."
-      remediation_text: "None."
+      scenario_description_short_text: "La fragmentación del ingreso está configurada correctamente."
+      description_long_text: "La configuración actual de la fragmentación del ingreso cumple con los requisitos de la carga de trabajo."
+      impact_and_risk_text: "Ninguno."
+      remediation_text: "Ninguna."
     - key: "changes_recommended01"
       scenario_description_short_text: "Adjust ingress sharding configuration."
       description_long_text: "The current ingress sharding configuration may need adjustments to optimize performance or accommodate future scaling."
@@ -44,8 +44,8 @@ check_definition:
       remediation_text: "Implement monitoring and alerting for key metrics such as request latency, error rate, and throughput for each shard."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: tbe
-  common_outcome_key: ""
+  status: pass
+  common_outcome_key: "advisory01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -55,3 +55,13 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get ingresscontroller -A
+    NAMESPACE                    NAME            AGE
+    openshift-ingress-operator   default         40d
+    openshift-ingress-operator   shard1-router   40d
+    openshift-ingress-operator   shard2-router   40d
+    openshift-ingress-operator   shard3-router   40d
+    openshift-ingress-operator   shard4-router   40d
+    openshift-ingress-operator   shard5-router   40d
+    openshift-ingress-operator   shard6-router   40d

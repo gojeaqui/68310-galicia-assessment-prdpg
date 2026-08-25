@@ -27,10 +27,15 @@ check_definition:
     description_long_text: "The customer has not setup their proxy correctly."
     impact_and_risk_text: "Customer may experience issues pulling images and pulling from SCM in their organization if proxying is not setup correctly."
     remediation_text: "Work with customer to get proxy information and implement using the documentation linked."
+  - key: "advisory01"
+    scenario_description_short_text: "No hay un proxy configurado."
+    description_long_text: "No hay un proxy configurado, la salida del cluster a internet va directo."
+    impact_and_risk_text: ""
+    remediation_text: ""
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
   status: pass
-  common_outcome_key: "no_change01"
+  common_outcome_key: "advisory01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -41,27 +46,29 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc describe proxy/cluster
-    Name:         cluster
-    Namespace:    
-    Labels:       <none>
-    Annotations:  <none>
-    API Version:  config.openshift.io/v1
-    Kind:         Proxy
-    Metadata:
-      Creation Timestamp:  2022-08-24T17:34:58Z
-      Generation:          2
-      Resource Version:    14614788
-      UID:                 47190d06-0aed-4506-b7de-6091fd38c858
-    Spec:
-      Http Proxy:   http://10.2.248.246:8080/
-      Https Proxy:  http://10.2.248.246:8080/
-      No Proxy:     .oscdmzprd01.cc.bna.net,.cc.bna.net,.tcc.tbna.net,api.oscdmzprd01.cc.bna.net,.apps.oscdmzprd01.cc.bna.net,10.0.0.0/8
-      Trusted CA:
-        Name:  
-    Status:
-      Http Proxy:   http://10.2.248.246:8080/
-      Https Proxy:  http://10.2.248.246:8080/
-      No Proxy:     .apps.oscdmzprd01.cc.bna.net,.cc.bna.net,.cluster.local,.oscdmzprd01.cc.bna.net,.svc,.tcc.tbna.net,10.0.0.0/8,10.10.13.0/24,10.168.0.0/14,127.0.0.1,172.60.0.0/16,api-int.oscdmzprd01.cc.bna.net,api.oscdmzprd01.cc.bna.net,localhost
-    Events:         <none>
-    ---
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get proxy cluster -o yaml
+    apiVersion: config.openshift.io/v1
+    kind: Proxy
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-wave: "10"
+        argocd.argoproj.io/tracking-id: paas-apps1-prdpg-platform-base:config.openshift.io/Proxy:default/cluster
+      creationTimestamp: "2026-06-30T16:28:30Z"
+      generation: 2
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/name: cluster-certs
+        app.kubernetes.io/part-of: cluster-certs
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: prd
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/site: pg
+        gitops.bancogalicia.com.ar/tier: high
+      name: cluster
+      resourceVersion: "72568"
+      uid: 883088a2-c256-487e-8711-fd3bce1f2435
+    spec:
+      trustedCA:
+        name: custom-ca
+    status: {}

@@ -43,18 +43,20 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get pods -n open-cluster-management
-    No resources found in open-cluster-management namespace.
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get pods -n open-cluster-management
+    No resources pods.core found in open-cluster-management namespace.
+
     ---
 
-    [openshift@bastion ~]$ oc get clustermanagers
-    error: the server doesn't have a resource type "clustermanagers"
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get clustermanagers
+    resource type "clustermanagers" not known.
+
     ---
 
-    [openshift@bastion ~]$ oc get managedclusters
-    error: the server doesn't have a resource type "managedclusters"
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get managedclusters
+    resource type "managedclusters" not known.
+
     ---
 
-    [openshift@bastion ~]$ oc get managedclusteraddons -A
-    error: the server doesn't have a resource type "managedclusteraddons"
-    ---
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get managedclusteraddons -A
+    resource type "managedclusteraddons" not known.

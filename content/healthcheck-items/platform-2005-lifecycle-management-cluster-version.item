@@ -37,10 +37,15 @@ check_definition:
     description_long_text: "La versión actual del clúster cuenta con el soporte de Red Hat, pero no es la más reciente."
     impact_and_risk_text: "Para que un clúster de OpenShift funcione correctamente, puede ser necesario acceder a servicios alojados proporcionados por Red Hat. No se puede garantizar la disponibilidad de estos servicios para versiones de OpenShift sin mantenimiento ni soporte."
     remediation_text: "Actualice a la última versión compatible de OpenShift."
+  - key: "changes_recommended02"
+    scenario_description_short_text: "Problemas con 'image-registry'"
+    description_long_text: "La versión actual del clúster cuenta con el soporte de Red Hat, pero hay un problema con el operador de Image Registry."
+    impact_and_risk_text: "Para que un clúster de OpenShift funcione correctamente se requiere que la Image Registry este levantada correctamente."
+    remediation_text: "Revisar la configuración de la Image Registry porque no tiene un storage configurado."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
   status: changes_recommended
-  common_outcome_key: "changes_recommended01"
+  common_outcome_key: "changes_recommended02"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -51,7 +56,126 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get clusterversion
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get clusterversion
     NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
-    version   4.14.52   True        False         120d    Cluster version is 4.14.52
+    version   4.20.16   True        False         2h58m   Error while reconciling 4.20.16: the cluster operator image-registry is not available
+
     ---
+
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get configs.imageregistry.operator.openshift.io cluster -o yaml
+    apiVersion: imageregistry.operator.openshift.io/v1
+    kind: Config
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-wave: "20"
+        argocd.argoproj.io/tracking-id: paas-apps1-prdpg-infra-nodes:imageregistry.operator.openshift.io/Config:openshift-machine-api/cluster
+      creationTimestamp: "2026-06-30T17:11:48Z"
+      finalizers:
+      - imageregistry.operator.openshift.io/finalizer
+      generation: 3
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: infra-nodes
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: prd
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/tier: high
+        helm.sh/chart: infra-nodes-0.1.0
+      name: cluster
+      resourceVersion: "29774264"
+      uid: a388b46a-fe69-48d1-b471-afbbc6b57cbb
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: docker-registry
+                  operator: In
+                  values:
+                  - default
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      httpSecret: d7684328643834c81f7c602b00088483b5d3199452831e10a7bbdb203d7c4eb1c5955f7ab6230479c1d873603e62c3d5b865cf75a3dd71f0046654afd675ac49
+      logLevel: Normal
+      managementState: Managed
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      observedConfig: null
+      operatorLogLevel: Normal
+      proxy: {}
+      replicas: 2
+      requests:
+        read:
+          maxWaitInQueue: 0s
+        write:
+          maxWaitInQueue: 0s
+      rolloutStrategy: RollingUpdate
+      storage: {}
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
+        value: reserved
+      - effect: NoExecute
+        key: node-role.kubernetes.io/infra
+        value: reserved
+      unsupportedConfigOverrides: null
+    status:
+      conditions:
+      - lastTransitionTime: "2026-06-30T19:56:15Z"
+        message: 'Unable to apply resources: storage backend not configured'
+        reason: Error
+        status: "False"
+        type: Progressing
+      - lastTransitionTime: "2026-06-30T19:57:03Z"
+        message: 'Error: storage backend not configured'
+        reason: StorageNotConfigured
+        status: "False"
+        type: Available
+      - lastTransitionTime: "2026-06-30T19:57:03Z"
+        message: 'Error: storage backend not configured'
+        reason: StorageNotConfigured
+        status: "True"
+        type: Degraded
+      - lastTransitionTime: "2026-06-30T19:57:03Z"
+        status: "False"
+        type: Removed
+      - lastTransitionTime: "2026-07-20T01:20:56Z"
+        reason: AsExpected
+        status: "False"
+        type: ImageConfigControllerDegraded
+      - lastTransitionTime: "2026-06-30T17:13:56Z"
+        reason: AsExpected
+        status: "False"
+        type: AzureStackCloudControllerDegraded
+      - lastTransitionTime: "2026-06-30T17:17:01Z"
+        reason: AsExpected
+        status: "False"
+        type: ImageRegistryCertificatesControllerDegraded
+      - lastTransitionTime: "2026-06-30T17:20:21Z"
+        message: The daemon set node-ca has available replicas
+        reason: AsExpected
+        status: "True"
+        type: NodeCADaemonAvailable
+      - lastTransitionTime: "2026-08-10T13:30:52Z"
+        message: The daemon set node-ca is deployed
+        reason: AsExpected
+        status: "False"
+        type: NodeCADaemonProgressing
+      - lastTransitionTime: "2026-07-20T00:01:15Z"
+        reason: AsExpected
+        status: "False"
+        type: NodeCADaemonControllerDegraded
+      generations:
+      - group: apps
+        hash: ""
+        lastGeneration: 1
+        name: node-ca
+        namespace: openshift-image-registry
+        resource: daemonsets
+      observedGeneration: 3
+      readyReplicas: 0
+      storage: {}
+      storageManaged: false

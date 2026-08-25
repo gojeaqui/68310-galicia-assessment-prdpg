@@ -49,16 +49,153 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc -n openshift-monitoring get configmap cluster-monitoring-config
-    NAME                        DATA   AGE
-    cluster-monitoring-config   1      3y59d
+    [guillermo@darkstar paas-apps1-prdpg]$ omc -n openshift-monitoring get configmap cluster-monitoring-config -o yaml
+    apiVersion: v1
+    data:
+      config.yaml: |
+        enableUserWorkload: true
+        prometheusOperator:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        prometheusK8s:
+          externalLabels:
+            cluster_name: paas-apps1-prdpg
+            environment: prd
+          remoteWrite:
+          - basicAuth:
+              username:
+                name: prometheus-corpo-secret
+                key: user
+              password:
+                name: prometheus-corpo-secret
+                key: password
+            tlsConfig:
+              ca: {}
+              cert: {}
+              insecureSkipVerify: true
+            url: "https://prometheus.bancogalicia.com.ar/prometheus/api/v1/write"
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+          retention: 7d
+          retentionSize: 250GB
+          volumeClaimTemplate:
+            spec:
+              storageClassName: thin-csi
+              resources:
+                requests:
+                  storage: 300Gi
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2Gi
+        alertmanagerMain:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+          volumeClaimTemplate:
+            metadata:
+              name: ocs-alertmanager-claim
+            spec:
+              resources:
+                requests:
+                  storage: 40Gi
+              storageClassName: thin-csi
+        kubeStateMetrics:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        telemeterClient:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        k8sPrometheusAdapter:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        openshiftStateMetrics:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        thanosQuerier:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+    kind: ConfigMap
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-wave: "20"
+        argocd.argoproj.io/tracking-id: paas-apps1-prdpg-infra-nodes:/ConfigMap:openshift-monitoring/cluster-monitoring-config
+      creationTimestamp: "2026-06-30T19:57:03Z"
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: infra-nodes
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: prd
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/tier: high
+        helm.sh/chart: infra-nodes-0.1.0
+      name: cluster-monitoring-config
+      namespace: openshift-monitoring
+      resourceVersion: "18785989"
+      uid: bb48d0b3-c79f-485d-ad7b-573142b68e41
+
     ---
 
-    [openshift@bastion ~]$ oc -n openshift-user-workload-monitoring get pod
+    [guillermo@darkstar paas-apps1-prdpg]$ omc -n openshift-user-workload-monitoring get pod
     NAME                                   READY   STATUS    RESTARTS   AGE
-    prometheus-operator-55df8bbdbd-w29pf   2/2     Running   2          113d
-    prometheus-user-workload-0             6/6     Running   0          57d
-    prometheus-user-workload-1             6/6     Running   0          57d
-    thanos-ruler-user-workload-0           4/4     Running   0          57d
-    thanos-ruler-user-workload-1           4/4     Running   0          57d
-    ---
+    prometheus-operator-5b6ddd9b5f-rsrgf   2/2     Running   2          11d
+    prometheus-user-workload-0             6/6     Running   0          11d
+    prometheus-user-workload-1             6/6     Running   0          4d
+    thanos-ruler-user-workload-0           4/4     Running   0          11d
+    thanos-ruler-user-workload-1           4/4     Running   0          4d

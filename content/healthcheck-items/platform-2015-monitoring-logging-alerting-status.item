@@ -20,6 +20,9 @@ check_definition:
       question: "is the cluster sending alerts?"
     - type: "survey"
       question: "Are all the pods mounted in openshift-monitoring namespace running fine or do you see broken pods?"
+    #- type: "command"
+    #  command: |
+    #    omc prom rules -s firing,pending -o wide
   common_outcomes:
   - key: "no_change01"
     scenario_description_short_text: "Openshift alerting is configured"
@@ -27,14 +30,14 @@ check_definition:
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "changes_required01"
-    scenario_description_short_text: "Openshift alerting is not configured"
-    description_long_text: "OpenShift alerts provide information to administrators about the status of the cluster. Alerts are firing that have not been properly addressed."
-    impact_and_risk_text: "Alerts that are firing can indicate imminent failure or just provide information based on the severity of the alert. Critical alerts should be immediately addressed and resolved to prevent platform outages or degraded performance. Other alerts such as 'INFO' may just need to be silenced once acknowledged"
-    remediation_text: "Review all alerts and remediate or silence as needed"
+    scenario_description_short_text: "OpenShift tiene alertas activas sin atender"
+    description_long_text: "Las alertas de OpenShift proporcionan información a los administradores sobre el estado del clúster. Algunas alertas están en estado \"firing\" y no han sido atendidas."
+    impact_and_risk_text: "Las alertas activas pueden indicar un fallo inminente o simplemente proporcionar información según la gravedad de la alerta. Las alertas críticas deben atenderse y resolverse inmediatamente para evitar interrupciones de la plataforma o una degradación del rendimiento. Otras alertas, como las de tipo 'INFO', pueden silenciarse una vez revisadas"
+    remediation_text: "Revisar todas las alertas y remediarlas o silenciarlas según sea necesario"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: tbe
-  common_outcome_key: ""
+  status: changes_recommended
+  common_outcome_key: "changes_required01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -44,3 +47,14 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar paas-apps1-prdpg]$ omc prom rules -s firing,pending -o wide
+    GROUP                                         RULE                                        SEVERITY   STATE     AGE   ALERTS   ACTIVE SINCE
+    storage-operations.rules                      PodStartupStorageOperationsFailing          info       pending   2s    1        10 Aug 26 15:45 UTC
+    cluster-operators                             ClusterOperatorDown                         critical   firing    5s    1        20 Jul 26 08:13 UTC
+    cluster-operators                             ClusterOperatorDegraded                     warning    firing    5s    2        20 Jul 26 08:13 UTC
+    cluster-version                               UpdateAvailable                             info       firing    21s   1        10 Aug 26 13:23 UTC
+    openshift-ingress-to-route-controller.rules   IngressWithoutClassName                     warning    firing    19s   4        07 Aug 26 16:11 UTC
+    insights                                      InsightsRecommendationActive                info       firing    13s   2        10 Aug 26 13:23 UTC
+    general.rules                                 Watchdog                                    none       firing    11s   1        10 Aug 26 13:23 UTC
+    openshift-kubernetes.rules                    ClusterMonitoringOperatorDeprecatedConfig   info       firing    11s   1        07 Aug 26 16:01 UTC

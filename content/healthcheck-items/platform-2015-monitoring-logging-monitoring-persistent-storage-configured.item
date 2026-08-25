@@ -47,26 +47,18 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
+
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get sc
-    NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-    loki-odf-storage              kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  56d
-    ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   56d
-    ocs-storagecluster-ceph-rgw   openshift-storage.ceph.rook.io/bucket   Delete          Immediate              false                  56d
-    ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   56d
-    ontap-delete                  csi.trident.netapp.io                   Delete          Immediate              true                   2y277d
-    ontap-retain                  csi.trident.netapp.io                   Retain          Immediate              true                   2y277d
-    openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              false                  56d
-    thin (default)                csi.vsphere.vmware.com                  Delete          Immediate              true                   120d
-    thin-csi                      csi.vsphere.vmware.com                  Delete          WaitForFirstConsumer   true                   2y67d
-    thin-retain                   csi.vsphere.vmware.com                  Retain          Immediate              true                   120d
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get sc
+    NAME                        PROVISIONER                                   RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    ocs-storagecluster-cephfs   k8s-sigs.io/nfs-subdir-external-provisioner   Delete          Immediate              true                   40d
+    thin-csi                    csi.vsphere.vmware.com                        Delete          WaitForFirstConsumer   true                   40d
+
     ---
 
-    [openshift@bastion ~]$ oc get pvc -n openshift-monitoring
-    NAME                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-    alertmanager-main-db-alertmanager-main-0   Bound    pvc-bb07bf89-1874-4690-9a08-451fcf1e70fd   10Gi       RWO            thin           120d
-    alertmanager-main-db-alertmanager-main-1   Bound    pvc-767a62fc-20dd-4d20-a381-a7fc54865abc   10Gi       RWO            thin           120d
-    prometheus-k8s-db-prometheus-k8s-0         Bound    pvc-0ad8c864-d259-456c-9998-56c78e483115   100Gi      RWO            thin           120d
-    prometheus-k8s-db-prometheus-k8s-1         Bound    pvc-1fcf280e-dd47-4c9f-8e8b-17d910c82bf2   100Gi      RWO            thin           182d
-    test                                       Bound    pvc-c9dd0d80-78ec-4e90-af0f-0cbac3a2fa61   5Gi        RWO            thin           20d
-    ---
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get pvc -n openshift-monitoring
+    NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    ocs-alertmanager-claim-alertmanager-main-0   Bound    pvc-d790ca49-6ab9-46f4-9555-cf8fb7fccd34   40Gi       RWO            thin-csi       24d
+    ocs-alertmanager-claim-alertmanager-main-1   Bound    pvc-cc6863ec-ea90-4405-8256-1ed05db2989a   40Gi       RWO            thin-csi       24d
+    prometheus-k8s-db-prometheus-k8s-0           Bound    pvc-48be11dd-be9b-46b0-b0e6-4fa474cb7f6f   300Gi      RWO            thin-csi       24d
+    prometheus-k8s-db-prometheus-k8s-1           Bound    pvc-773f6ab7-615d-4e64-8132-74e67cb52b47   300Gi      RWO            thin-csi       24d

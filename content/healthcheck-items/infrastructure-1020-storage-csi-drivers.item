@@ -117,38 +117,49 @@ customer_environment_findings:
       volumeBindingMode: WaitForFirstConsumer
     kind: List
 
-
-    [guillermo@darkstar BNA]$ omc get csinode -o yaml
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get csinode -o yaml
     apiVersion: v1
     items:
     - apiVersion: storage.k8s.io/v1
       kind: CSINode
       metadata:
         annotations:
-          storage.alpha.kubernetes.io/migrated-plugins: kubernetes.io/aws-ebs,kubernetes.io/azure-disk,kubernetes.io/azure-file,kubernetes.io/cinder,kubernetes.io/gce-pd,kubernetes.io/vsphere-volume
-        creationTimestamp: "2025-07-01T05:06:32Z"
-        name: oscdmzprd01-n5xps-infra-6bjvr
+          storage.alpha.kubernetes.io/migrated-plugins: kubernetes.io/aws-ebs,kubernetes.io/azure-disk,kubernetes.io/azure-file,kubernetes.io/cinder,kubernetes.io/gce-pd,kubernetes.io/portworx-volume,kubernetes.io/vsphere-volume
+        creationTimestamp: "2026-06-30T19:45:12Z"
+        name: paas-apps1-prdpg-d7k25-infra-0-zwblp
         ownerReferences:
         - apiVersion: v1
           kind: Node
-          name: oscdmzprd01-n5xps-infra-6bjvr
-          uid: 41c29ab7-51c4-4f56-9f10-fc65ce31f20f
-        resourceVersion: "1038062673"
-        uid: af735454-78cc-4ee1-beed-f2af7fc093e6
+          name: paas-apps1-prdpg-d7k25-infra-0-zwblp
+          uid: 71f1fb16-d699-422a-b756-4ca7a60acef5
+        resourceVersion: "100109"
+        uid: 53c8b448-3085-4409-ba5f-0bfd3eb73b35
       spec:
         drivers:
         - allocatable:
             count: 59
           name: csi.vsphere.vmware.com
-          nodeID: 423fcfd7-248d-3e60-0099-b50044ec8da0
+          nodeID: 4232a87c-b32b-bb9c-f992-f87277650d03
           topologyKeys: null
-        - name: csi.trident.netapp.io
-          nodeID: oscdmzprd01-n5xps-infra-6bjvr
-          topologyKeys: null
-        - name: openshift-storage.rbd.csi.ceph.com
-          nodeID: oscdmzprd01-n5xps-infra-6bjvr
-          topologyKeys: null
-        - name: openshift-storage.cephfs.csi.ceph.com
-          nodeID: oscdmzprd01-n5xps-infra-6bjvr
+    - apiVersion: storage.k8s.io/v1
+      kind: CSINode
+      metadata:
+        annotations:
+          storage.alpha.kubernetes.io/migrated-plugins: kubernetes.io/aws-ebs,kubernetes.io/azure-disk,kubernetes.io/azure-file,kubernetes.io/cinder,kubernetes.io/gce-pd,kubernetes.io/portworx-volume,kubernetes.io/vsphere-volume
+        creationTimestamp: "2026-06-30T19:50:45Z"
+        name: paas-apps1-prdpg-d7k25-infra-1-8q5hl
+        ownerReferences:
+        - apiVersion: v1
+          kind: Node
+          name: paas-apps1-prdpg-d7k25-infra-1-8q5hl
+          uid: ab3e4b43-71a3-4888-8e50-f97c4622bd9c
+        resourceVersion: "103739"
+        uid: dffbe52b-ac6a-48f2-81c6-e145c2b553d8
+      spec:
+        drivers:
+        - allocatable:
+            count: 59
+          name: csi.vsphere.vmware.com
+          nodeID: 42325b43-d18f-98a8-5329-26bbaed8f3da
           topologyKeys: null
     ...

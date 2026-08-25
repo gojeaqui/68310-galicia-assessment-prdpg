@@ -33,7 +33,7 @@ check_definition:
       remediation_text: "{cust} should plan an upgrade or rebuild of affected clusters to use a supported plug-in."
     - key: "nochange01"
       scenario_description_short_text: "Se esta utilizando OVN-Kubernetes o el complemento CNI certificado"
-      description_long_text: "Se encontró que el cluster ya fue migrado a OVN-Kubernetes"  # Consultant to fill out Plugin information
+      description_long_text: "El cluster ya esta utilizando OVN-Kubernetes desde la instalacion"  # Consultant to fill out Plugin information
       impact_and_risk_text: ""
       remediation_text: ""
 customer_environment_findings:
@@ -50,30 +50,40 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get network.config.openshift.io cluster -o yaml
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get network.config.openshift.io cluster -o yaml
     apiVersion: config.openshift.io/v1
     kind: Network
     metadata:
-      creationTimestamp: "2022-08-24T17:34:58Z"
+      creationTimestamp: "2026-06-30T16:28:29Z"
       generation: 6
       name: cluster
-      resourceVersion: "960068894"
-      uid: fffa9a3b-7e35-4c69-be95-22481a7866c6
+      resourceVersion: "26713353"
+      uid: c0ccb665-80db-4d18-8920-64cff98b4acc
     spec:
       clusterNetwork:
-      - cidr: 10.168.0.0/14
-        hostPrefix: 23
+      - cidr: 10.128.0.0/18
+        hostPrefix: 24
       externalIP:
         policy: {}
+      networkDiagnostics:
+        mode: ""
+        sourcePlacement: {}
+        targetPlacement: {}
       networkType: OVNKubernetes
       serviceNetwork:
-      - 172.60.0.0/16
+      - 172.30.0.0/16
     status:
       clusterNetwork:
-      - cidr: 10.168.0.0/14
-        hostPrefix: 23
+      - cidr: 10.128.0.0/18
+        hostPrefix: 24
       clusterNetworkMTU: 1400
+      conditions:
+      - lastTransitionTime: "2026-08-07T16:10:50Z"
+        message: ""
+        observedGeneration: 0
+        reason: AsExpected
+        status: "True"
+        type: NetworkDiagnosticsAvailable
       networkType: OVNKubernetes
       serviceNetwork:
-      - 172.60.0.0/16
-    ---
+      - 172.30.0.0/16

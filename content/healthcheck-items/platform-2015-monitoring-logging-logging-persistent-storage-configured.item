@@ -35,14 +35,14 @@ check_definition:
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "changes_required01"
-    scenario_description_short_text: ""
-    description_long_text: "The underlying storage provided to OpenShift Logging's  deployment is non-optimal and will result in poor performance and/or unreliability"
-    impact_and_risk_text: "Logging requires persistent storage. The faster the storage, the faster the Logging performance. SSD/NVMe level performance is required to handle the high IOPS logging needs. Certain types of storage such as NFS or local raw block volumes can result in unreliability and corruption to data."
-    remediation_text: "Configure Logging persistent storage with SSD/NVMe backed storage"
+    scenario_description_short_text: "El almacenamiento subyacente proporcionado al servicio de Logging no es óptimo"
+    description_long_text: "El almacenamiento subyacente proporcionado al despliegue de OpenShift Logging le faltan algunos PVCs de Loki"
+    impact_and_risk_text: "Logging requiere almacenamiento persistente. Cuanto más rápido sea el almacenamiento, mejor será el rendimiento de Logging. Se requiere un rendimiento de nivel SSD/NVMe para gestionar las altas necesidades de IOPS de los registros. Algunos tipos de almacenamiento, como NFS o los volúmenes locales de bloques sin formato, pueden provocar falta de fiabilidad y corrupción de datos. No se encontraron PVC para Loki."
+    remediation_text: "Configure el almacenamiento persistente de Logging con almacenamiento respaldado por SSD/NVMe y asegúrese de que existan PVC para Loki"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: tbe
-  common_outcome_key: ""
+  status: fail
+  common_outcome_key: "changes_required01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -54,33 +54,21 @@ customer_environment_findings:
     additional_comments_text: ""
 
   outcome_evidence: |
-    
-    [openshift@bastion ~]$ oc get sc
-    NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-    loki-odf-storage              kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  56d
-    ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   56d
-    ocs-storagecluster-ceph-rgw   openshift-storage.ceph.rook.io/bucket   Delete          Immediate              false                  56d
-    ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   56d
-    ontap-delete                  csi.trident.netapp.io                   Delete          Immediate              true                   2y277d
-    ontap-retain                  csi.trident.netapp.io                   Retain          Immediate              true                   2y277d
-    openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              false                  56d
-    thin (default)                csi.vsphere.vmware.com                  Delete          Immediate              true                   120d
-    thin-csi                      csi.vsphere.vmware.com                  Delete          WaitForFirstConsumer   true                   2y67d
-    thin-retain                   csi.vsphere.vmware.com                  Retain          Immediate              true                   120d
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get sc
+    NAME                        PROVISIONER                                   RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    ocs-storagecluster-cephfs   k8s-sigs.io/nfs-subdir-external-provisioner   Delete          Immediate              true                   40d
+    thin-csi                    csi.vsphere.vmware.com                        Delete          WaitForFirstConsumer   true                   40d
+
     ---
 
-    [openshift@bastion ~]$ oc get pvc -n openshift-logging
-    NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
-    elasticsearch-elasticsearch-cdm-0l2d423c-1   Bound    pvc-de101214-c395-4029-b386-4e492364f841   2Ti        RWO            thin                          119d
-    elasticsearch-elasticsearch-cdm-0l2d423c-2   Bound    pvc-d082c894-6048-43dc-8351-9a64773c1491   2Ti        RWO            thin                          120d
-    elasticsearch-elasticsearch-cdm-0l2d423c-3   Bound    pvc-8f6d78a8-61f1-4955-a223-bb62daebd4dc   2Ti        RWO            thin                          119d
-    storage-logging-loki-compactor-0             Bound    pvc-49466cb8-d515-476a-ac01-d35ea1e55ecc   10Gi       RWO            ocs-storagecluster-ceph-rbd   55d
-    storage-logging-loki-index-gateway-0         Bound    pvc-913dad1a-6287-4b1c-8ff6-a66a0aee4c6a   50Gi       RWO            ocs-storagecluster-ceph-rbd   55d
-    storage-logging-loki-index-gateway-1         Bound    pvc-29e20d23-f8b8-4494-ad09-139363daf387   50Gi       RWO            ocs-storagecluster-ceph-rbd   55d
-    storage-logging-loki-ingester-0              Bound    pvc-b95095b9-e9d5-4b4a-8c53-c750814e3570   10Gi       RWO            ocs-storagecluster-ceph-rbd   55d
-    storage-logging-loki-ingester-1              Bound    pvc-84f13fe2-dff9-401b-837f-acd1869d1340   10Gi       RWO            ocs-storagecluster-ceph-rbd   55d
-    storage-logging-loki-ingester-2              Bound    pvc-da5343cb-9fe0-4612-b72b-cbbfcc26fea2   10Gi       RWO            ocs-storagecluster-ceph-rbd   55d
-    wal-logging-loki-ingester-0                  Bound    pvc-5b2c7c3e-d18e-4992-8ab2-11f5c6c1d232   150Gi      RWO            ocs-storagecluster-ceph-rbd   55d
-    wal-logging-loki-ingester-1                  Bound    pvc-97ea7433-9c3b-4dcf-b32a-d3d96a5e2d2e   150Gi      RWO            ocs-storagecluster-ceph-rbd   55d
-    wal-logging-loki-ingester-2                  Bound    pvc-647ac491-b6a9-44e4-8412-d225fedc5ace   150Gi      RWO            ocs-storagecluster-ceph-rbd   55d
-    ---
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get pv
+    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                                   STORAGECLASS                REASON   AGE
+    pvc-3446b47b-8d4c-4b8a-8fcf-8f084a9858b0   1Gi        RWO            Delete           Bound    amp/system-searchd-manticore                                            thin-csi                             13d
+    pvc-36fcb4ec-fcee-450a-8e1c-c4debcc2d32e   3Gi        RWO            Delete           Bound    ocp-etcd-backup/etcd-backup-pvc                                         thin-csi                             3d
+    pvc-48be11dd-be9b-46b0-b0e6-4fa474cb7f6f   300Gi      RWO            Delete           Bound    openshift-monitoring/prometheus-k8s-db-prometheus-k8s-0                 thin-csi                             24d
+    pvc-544cc53a-e70a-4c12-ac4b-7a80874392ff   15Gi       RWO            Delete           Bound    netbackup/netbackup-netbackupkops                                       thin-csi                             34d
+    pvc-773f6ab7-615d-4e64-8132-74e67cb52b47   300Gi      RWO            Delete           Bound    openshift-monitoring/prometheus-k8s-db-prometheus-k8s-1                 thin-csi                             24d
+    pvc-7f142961-e09b-49c8-8532-cf92a7e6e99e   10Gi       RWX            Delete           Bound    amp/system-storage                                                      ocs-storagecluster-cephfs            13d
+    pvc-9aa1f43f-23fb-48b9-b583-f1550190720f   1Mi        RWX            Delete           Bound    nfs-subdir-external-provisioner/nfs-subdir-external-provisioner-smoke   ocs-storagecluster-cephfs            40d
+    pvc-cc6863ec-ea90-4405-8256-1ed05db2989a   40Gi       RWO            Delete           Bound    openshift-monitoring/ocs-alertmanager-claim-alertmanager-main-1         thin-csi                             24d
+    pvc-d790ca49-6ab9-46f4-9555-cf8fb7fccd34   40Gi       RWO            Delete           Bound    openshift-monitoring/ocs-alertmanager-claim-alertmanager-main-0         thin-csi                             24d
