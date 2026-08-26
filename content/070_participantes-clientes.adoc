@@ -9,24 +9,18 @@ decision making or implementation.
 
 ////
 .{cust} Participantes
-[cols="4,5,3",options=header]
+[cols="4,6",options=header]
 |===
 |Nombre
 |Correo Electrónico
 
-// Name
-| Fernando Daniel Carozza
-// E-mail address
-| fernando.carozza@bancogalicia.com.ar
+|Fernando Daniel Carozza
+|fernando.carozza@bancogalicia.com.ar
 
-// Name
-| Fernando Luis Gonzalez
-// E-mail address
-| fernando.l.gonzalez@bancogalicia.com.ar
+|Fernando Luis Gonzalez
+|fernando.l.gonzalez@bancogalicia.com.ar
 
-// Name
-| Luis Pablo Aparicio
-// E-mail address
-| luis.aparicio@bancogalicia.com.ar
+|Luis Pablo Aparicio
+|luis.aparicio@bancogalicia.com.ar
 
 |===
