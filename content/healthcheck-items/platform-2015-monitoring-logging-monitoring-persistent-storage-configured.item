@@ -47,7 +47,6 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
-
   outcome_evidence: |
     [guillermo@darkstar paas-apps1-prdpg]$ omc get sc
     NAME                        PROVISIONER                                   RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE

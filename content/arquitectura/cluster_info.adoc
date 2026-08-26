@@ -116,7 +116,6 @@ Resources
 [options="header"]
 |===
 | Nodo                                       | CPU | Memoria       | Disco         |
-| ------------------------------------------ | --: | ------------: | ------------: |
 | paas-apps1-prdpg-d7k25-infra-0-zwblp       |  12 |      31.34 Gi |      99.44 Gi |
 | paas-apps1-prdpg-d7k25-infra-1-8q5hl       |  12 |      31.34 Gi |      99.44 Gi |
 | paas-apps1-prdpg-d7k25-infra-2-ptdqx       |  12 |      31.34 Gi |      99.44 Gi |

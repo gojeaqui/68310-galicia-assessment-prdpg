@@ -39,7 +39,6 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
-
   outcome_evidence: |
     [guillermo@darkstar paas-apps1-prdpg]$ omc get secrets kubeadmin -n kube-system
     NAME        TYPE     DATA   AGE

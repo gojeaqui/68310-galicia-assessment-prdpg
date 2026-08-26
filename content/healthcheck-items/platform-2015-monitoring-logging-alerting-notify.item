@@ -36,7 +36,7 @@ check_definition:
     remediation_text: "Configurar los receptores de alertas en sistemas externos adicionales al mail"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: changes_recommended
+  status: tbe
   common_outcome_key: "changes_recommended01"
   outcome_overrides:
       scenario_description_short_text: ""
