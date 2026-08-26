@@ -50,8 +50,8 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-[guillermo@darkstar paas-apps1-prdpg]$ omc get configs.imageregistry.operator.openshift.io/cluster -o yaml | grep -i manage
-    app.kubernetes.io/managed-by: Helm
-    gitops.bancogalicia.com.ar/managed-by: argocd
-  managementState: Managed
-  storageManaged: false
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get configs.imageregistry.operator.openshift.io/cluster -o yaml | grep -i manage
+        app.kubernetes.io/managed-by: Helm
+        gitops.bancogalicia.com.ar/managed-by: argocd
+      managementState: Managed
+      storageManaged: false
