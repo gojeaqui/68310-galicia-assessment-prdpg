@@ -37,7 +37,7 @@ check_definition:
     remediation_text: "etcd on machines that are backed by SSD or NVMe disks with low latency and high throughput. Consider single-level cell (SLC) solid-state drives (SSDs), which provide 1 bit per memory cell, are durable and reliable, and are ideal for write-intensive workloads."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: pass
+  status: tbe
   common_outcome_key: "nochange_01"
   outcome_overrides:
       scenario_description_short_text: ""

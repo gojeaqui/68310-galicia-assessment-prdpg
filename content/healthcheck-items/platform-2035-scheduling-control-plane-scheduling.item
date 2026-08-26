@@ -45,44 +45,46 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get node
-    NAME                                STATUS   ROLES                  AGE     VERSION
-    oscdmzprd01-n5xps-infra-6bjvr       Ready    infra                  113d    v1.27.16+03a907c
-    oscdmzprd01-n5xps-infra-hdwjx       Ready    infra                  113d    v1.27.16+03a907c
-    oscdmzprd01-n5xps-infra-xggmf       Ready    infra                  113d    v1.27.16+03a907c
-    oscdmzprd01-n5xps-infra-xstc7       Ready    infra                  113d    v1.27.16+03a907c
-    oscdmzprd01-n5xps-loki-9c5z2        Ready    infra,loki             57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-loki-tj4bh        Ready    infra,loki             57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-loki-z852k        Ready    infra,loki             57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-master-0          Ready    control-plane,master   3y60d   v1.27.16+03a907c
-    oscdmzprd01-n5xps-master-1          Ready    control-plane,master   3y60d   v1.27.16+03a907c
-    oscdmzprd01-n5xps-master-2          Ready    control-plane,master   3y60d   v1.27.16+03a907c
-    oscdmzprd01-n5xps-storage-1-dj9c9   Ready    infra,storage          56d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-storage-2-nrhkd   Ready    infra,storage          57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-storage-3-wnsfn   Ready    infra,storage          57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-storage-4-d6p6k   Ready    infra,storage          57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-storage-5-642cg   Ready    infra,storage          57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-worker-5l8fh      Ready    worker                 57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-worker-b5fwt      Ready    worker                 57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-worker-f4lxl      Ready    worker                 57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-worker-jwpzr      Ready    worker                 57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-worker-qvq2n      Ready    worker                 57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-worker-vg9vs      Ready    worker                 57d     v1.27.16+03a907c
-    oscdmzprd01-n5xps-worker-w29hd      Ready    worker                 57d     v1.27.16+03a907c
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get node
+    NAME                                         STATUS   ROLES                  AGE   VERSION
+    paas-apps1-prdpg-d7k25-infra-0-zwblp         Ready    infra,worker           40d   v1.33.8
+    paas-apps1-prdpg-d7k25-infra-1-8q5hl         Ready    infra,worker           40d   v1.33.8
+    paas-apps1-prdpg-d7k25-infra-2-ptdqx         Ready    infra,worker           40d   v1.33.8
+    paas-apps1-prdpg-d7k25-master-0              Ready    control-plane,master   40d   v1.33.8
+    paas-apps1-prdpg-d7k25-master-1              Ready    control-plane,master   40d   v1.33.8
+    paas-apps1-prdpg-d7k25-master-2              Ready    control-plane,master   40d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-0-dnvzs   Ready    worker,worker-apps-0   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-0-fvvpp   Ready    worker,worker-apps-0   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-0-h2pxm   Ready    worker,worker-apps-0   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-0-h2wrj   Ready    worker,worker-apps-0   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-0-mk4tr   Ready    worker,worker-apps-0   19d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-0-st8f6   Ready    worker,worker-apps-0   19d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-1-dt2jn   Ready    worker,worker-apps-1   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-1-jm6rs   Ready    worker,worker-apps-1   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-1-mbvjd   Ready    worker,worker-apps-1   19d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-1-mk7b5   Ready    worker,worker-apps-1   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-1-r5sv8   Ready    worker,worker-apps-1   19d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-1-xkljk   Ready    worker,worker-apps-1   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-2-4g7w6   Ready    worker,worker-apps-2   19d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-2-d4kg9   Ready    worker,worker-apps-2   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-2-h2l5s   Ready    worker,worker-apps-2   19d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-2-q2257   Ready    worker,worker-apps-2   4d    v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-2-rsthn   Ready    worker,worker-apps-2   19d   v1.33.8
+    paas-apps1-prdpg-d7k25-worker-apps-2-wssjf   Ready    worker,worker-apps-2   4d    v1.33.8
+
     ---
 
-    [openshift@bastion ~]$ oc get scheduler cluster -o yaml
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get scheduler cluster -o yaml
     apiVersion: config.openshift.io/v1
     kind: Scheduler
     metadata:
-      creationTimestamp: "2022-08-24T17:34:59Z"
+      creationTimestamp: "2026-06-30T16:28:31Z"
       generation: 1
       name: cluster
-      resourceVersion: "380"
-      uid: 1f8b1fcc-699d-48bf-82ad-5e6ff52c0356
+      resourceVersion: "562"
+      uid: b5f27f62-b69c-4322-b00d-216df1efba25
     spec:
       mastersSchedulable: false
       policy:
         name: ""
     status: {}
-    ---

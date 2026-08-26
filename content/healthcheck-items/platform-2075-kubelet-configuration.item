@@ -17,7 +17,7 @@ check_definition:
         oc get kubeletconfigs -A -o yaml
   common_outcomes:
     - key: "advisory01"
-      scenario_description_short_text: "No se encontraron configuraciones de Kubelet"
+      scenario_description_short_text: "No se encontraron problemas en las configuraciones de Kubelet"
       description_long_text: ""  # Consultant to fill out custom kubelet details
       impact_and_risk_text: ""
       remediation_text: ""
@@ -35,10 +35,210 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get kubeletconfigs -A -o yaml
+    [guillermo@darkstar paas-apps1-prdpg]$  omc get kubeletconfigs -A -o yaml
     apiVersion: v1
-    items: []
+    items:
+    - apiVersion: machineconfiguration.openshift.io/v1
+      kind: KubeletConfig
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-wave: "20"
+          argocd.argoproj.io/tracking-id: paas-apps1-prdpg-platform-base:machineconfiguration.openshift.io/KubeletConfig:default/autosizingreserved-maxpods-infra
+          machineconfiguration.openshift.io/mc-name-suffix: ""
+        creationTimestamp: "2026-06-30T19:24:39Z"
+        finalizers:
+        - 99-infra-generated-kubelet
+        generation: 2
+        labels:
+          app.kubernetes.io/component: config
+          app.kubernetes.io/name: kubelet-config
+          app.kubernetes.io/part-of: kubelet-config
+          gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+          gitops.bancogalicia.com.ar/domain: apps
+          gitops.bancogalicia.com.ar/env: prd
+          gitops.bancogalicia.com.ar/managed-by: argocd
+          gitops.bancogalicia.com.ar/site: pg
+          gitops.bancogalicia.com.ar/tier: high
+        name: autosizingreserved-maxpods-infra
+        resourceVersion: "14954260"
+        uid: ba215f9e-e12a-4477-9db2-ed79bd2707d3
+      spec:
+        kubeletConfig:
+          autoSizingReserved: true
+        machineConfigPoolSelector:
+          matchLabels:
+            pools.operator.machineconfiguration.openshift.io/infra: ""
+      status:
+        conditions:
+        - lastTransitionTime: "2026-06-30T19:42:58Z"
+          message: 'Error: could not find any MachineConfigPool set for KubeletConfig'
+          status: "False"
+          type: Failure
+        - lastTransitionTime: "2026-07-24T14:35:12Z"
+          message: Success
+          status: "True"
+          type: Success
+        observedGeneration: 2
+    - apiVersion: machineconfiguration.openshift.io/v1
+      kind: KubeletConfig
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-wave: "10"
+          argocd.argoproj.io/tracking-id: paas-apps1-prdpg-platform-base:machineconfiguration.openshift.io/KubeletConfig:default/autosizingreserved-maxpods-worker-apps-0
+          machineconfiguration.openshift.io/mc-name-suffix: ""
+        creationTimestamp: "2026-06-30T19:24:34Z"
+        finalizers:
+        - 99-worker-apps-0-generated-kubelet
+        generation: 2
+        labels:
+          app.kubernetes.io/component: config
+          app.kubernetes.io/name: kubelet-config
+          app.kubernetes.io/part-of: kubelet-config
+          gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+          gitops.bancogalicia.com.ar/domain: apps
+          gitops.bancogalicia.com.ar/env: prd
+          gitops.bancogalicia.com.ar/managed-by: argocd
+          gitops.bancogalicia.com.ar/site: pg
+          gitops.bancogalicia.com.ar/tier: high
+        name: autosizingreserved-maxpods-worker-apps-0
+        resourceVersion: "14954221"
+        uid: 7dbdc423-568e-499a-8245-5ef15696bdee
+      spec:
+        kubeletConfig:
+          autoSizingReserved: true
+          maxPods: 150
+        machineConfigPoolSelector:
+          matchLabels:
+            pools.operator.machineconfiguration.openshift.io/worker-apps-0: ""
+      status:
+        conditions:
+        - lastTransitionTime: "2026-07-24T14:35:07Z"
+          message: Success
+          status: "True"
+          type: Success
+        observedGeneration: 2
+    - apiVersion: machineconfiguration.openshift.io/v1
+      kind: KubeletConfig
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-wave: "10"
+          argocd.argoproj.io/tracking-id: paas-apps1-prdpg-platform-base:machineconfiguration.openshift.io/KubeletConfig:default/autosizingreserved-maxpods-worker-apps-1
+          machineconfiguration.openshift.io/mc-name-suffix: ""
+        creationTimestamp: "2026-06-30T19:24:34Z"
+        finalizers:
+        - 99-worker-apps-1-generated-kubelet
+        generation: 2
+        labels:
+          app.kubernetes.io/component: config
+          app.kubernetes.io/name: kubelet-config
+          app.kubernetes.io/part-of: kubelet-config
+          gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+          gitops.bancogalicia.com.ar/domain: apps
+          gitops.bancogalicia.com.ar/env: prd
+          gitops.bancogalicia.com.ar/managed-by: argocd
+          gitops.bancogalicia.com.ar/site: pg
+          gitops.bancogalicia.com.ar/tier: high
+        name: autosizingreserved-maxpods-worker-apps-1
+        resourceVersion: "14954223"
+        uid: 56cc9a9e-1d95-4f9d-b653-5a58707fd71d
+      spec:
+        kubeletConfig:
+          autoSizingReserved: true
+          maxPods: 150
+        machineConfigPoolSelector:
+          matchLabels:
+            pools.operator.machineconfiguration.openshift.io/worker-apps-1: ""
+      status:
+        conditions:
+        - lastTransitionTime: "2026-07-24T14:35:08Z"
+          message: Success
+          status: "True"
+          type: Success
+        observedGeneration: 2
+    - apiVersion: machineconfiguration.openshift.io/v1
+      kind: KubeletConfig
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-wave: "10"
+          argocd.argoproj.io/tracking-id: paas-apps1-prdpg-platform-base:machineconfiguration.openshift.io/KubeletConfig:default/autosizingreserved-maxpods-worker-apps-2
+          machineconfiguration.openshift.io/mc-name-suffix: ""
+        creationTimestamp: "2026-06-30T19:24:34Z"
+        finalizers:
+        - 99-worker-apps-2-generated-kubelet
+        generation: 2
+        labels:
+          app.kubernetes.io/component: config
+          app.kubernetes.io/name: kubelet-config
+          app.kubernetes.io/part-of: kubelet-config
+          gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+          gitops.bancogalicia.com.ar/domain: apps
+          gitops.bancogalicia.com.ar/env: prd
+          gitops.bancogalicia.com.ar/managed-by: argocd
+          gitops.bancogalicia.com.ar/site: pg
+          gitops.bancogalicia.com.ar/tier: high
+        name: autosizingreserved-maxpods-worker-apps-2
+        resourceVersion: "14954258"
+        uid: 29b2c0b6-0853-46c9-91d0-48f016ca75c0
+      spec:
+        kubeletConfig:
+          autoSizingReserved: true
+          maxPods: 150
+        machineConfigPoolSelector:
+          matchLabels:
+            pools.operator.machineconfiguration.openshift.io/worker-apps-2: ""
+      status:
+        conditions:
+        - lastTransitionTime: "2026-07-24T14:35:12Z"
+          message: Success
+          status: "True"
+          type: Success
+        observedGeneration: 2
+    - apiVersion: machineconfiguration.openshift.io/v1
+      kind: KubeletConfig
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-wave: "20"
+          argocd.argoproj.io/tracking-id: paas-apps1-prdpg-platform-base:machineconfiguration.openshift.io/KubeletConfig:default/dynamic-master
+          machineconfiguration.openshift.io/mc-name-suffix: ""
+        creationTimestamp: "2026-06-30T19:24:39Z"
+        finalizers:
+        - 99-master-generated-kubelet
+        generation: 1
+        labels:
+          app.kubernetes.io/component: config
+          app.kubernetes.io/name: kubelet-config
+          app.kubernetes.io/part-of: kubelet-config
+          gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+          gitops.bancogalicia.com.ar/domain: apps
+          gitops.bancogalicia.com.ar/env: prd
+          gitops.bancogalicia.com.ar/managed-by: argocd
+          gitops.bancogalicia.com.ar/site: pg
+          gitops.bancogalicia.com.ar/tier: high
+        name: dynamic-master
+        resourceVersion: "9211247"
+        uid: fc09ca83-75fd-4281-bf09-db8f81a073f4
+      spec:
+        kubeletConfig:
+          autoSizingReserved: true
+        machineConfigPoolSelector:
+          matchLabels:
+            pools.operator.machineconfiguration.openshift.io/master: ""
+      status:
+        conditions:
+        - lastTransitionTime: "2026-06-30T19:24:45Z"
+          message: Success
+          status: "True"
+          type: Success
+        observedGeneration: 1
     kind: List
-    metadata:
-      resourceVersion: ""
+
     ---
+
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get mcp
+    NAME            CONFIG                                                    UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+    infra           rendered-infra-06c415d9c6c3d03af2b7ccda6b24e1b0           True      False      False      3              3                   3                     0                      40d
+    master          rendered-master-86d975a97cc682cce5139647a305871b          True      False      False      3              3                   3                     0                      40d
+    worker-apps-0   rendered-worker-apps-0-55eb7195ab232a63c71c370849bdef4b   True      False      False      6              6                   6                     0                      40d
+    worker-apps-1   rendered-worker-apps-1-55eb7195ab232a63c71c370849bdef4b   True      False      False      6              6                   6                     0                      40d
+    worker-apps-2   rendered-worker-apps-2-55eb7195ab232a63c71c370849bdef4b   True      False      False      6              6                   6                     0                      40d
+    worker          rendered-worker-06c415d9c6c3d03af2b7ccda6b24e1b0          True      False      False      0              0                   0                     0                      40d

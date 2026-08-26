@@ -28,7 +28,7 @@ check_definition:
     remediation_text: "Set a default node selector"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: pass
+  status: tbe
   common_outcome_key: "no_change01"
   outcome_overrides:
       scenario_description_short_text: ""
@@ -40,20 +40,21 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get schedulers.config.openshift.io cluster -o yaml
-    apiVersion: config.openshift.io/v1
-    kind: Scheduler
-    metadata:
-      creationTimestamp: "2022-08-24T17:34:59Z"
-      generation: 1
-      name: cluster
-      resourceVersion: "380"
-      uid: 1f8b1fcc-699d-48bf-82ad-5e6ff52c0356
-    spec:
-      mastersSchedulable: false
-      policy:
-        name: ""
-    status: {}
+[guillermo@darkstar paas-apps1-prdpg]$ omc get schedulers.config.openshift.io cluster -o yaml
+apiVersion: config.openshift.io/v1
+kind: Scheduler
+metadata:
+  creationTimestamp: "2026-06-30T16:28:31Z"
+  generation: 1
+  name: cluster
+  resourceVersion: "562"
+  uid: b5f27f62-b69c-4322-b00d-216df1efba25
+spec:
+  mastersSchedulable: false
+  policy:
+    name: ""
+status: {}
+
     ---
 
     [openshift@bastion ~]$ oc get pods --all-namespaces -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName

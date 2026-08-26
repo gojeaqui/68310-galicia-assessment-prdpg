@@ -60,7 +60,7 @@ check_definition:
       impact_and_risk_text: "Potential service disruption or blocked maintenance operations"
       remediation_text: "Adjust minAvailable/maxUnavailable values based on application needs"
 customer_environment_findings:
-  status: pass
+  status: tbe
   common_outcome_key: "no_change01"
   outcome_overrides:
       scenario_description_short_text: ""
