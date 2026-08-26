@@ -12,41 +12,21 @@ decision making or implementation.
 [cols="4,5,3",options=header]
 |===
 |Nombre
-|Rol
-|Correo Electronico
+|Correo Electrónico
 
 // Name
-| Alejandro Javier Romero
-// Function
-| Openshift Admin IED
+| Fernando Daniel Carozza
 // E-mail address
-| ajromero@bna.com.ar
+| fernando.carozza@bancogalicia.com.ar
 
 // Name
-| Diego Callejo
-// Function
-| Arq/Supervisor Openshift IED
+| Fernando Luis Gonzalez
 // E-mail address
-| dcallejo@bna.com.ar
+| fernando.l.gonzalez@bancogalicia.com.ar
 
 // Name
-| Juan Agustin Lourenco
-// Function
-| Openshift Admin IED
+| Luis Pablo Aparicio
 // E-mail address
-| jlourenco@bna.com.ar
+| luis.aparicio@bancogalicia.com.ar
 
-// Name
-| Matias Lesniak
-// Function
-| DevOps AyS
-// E-mail address
-| mlesniak@bna.com.ar
-
-// Name
-| Rodrigo Chavez
-// Function
-| Openshift Admin IED
-// E-mail address
-| rodrigochavez@bna.com.ar
 |===
