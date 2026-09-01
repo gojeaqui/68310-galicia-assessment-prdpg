@@ -70,13 +70,13 @@ A continuación se deja un resumen de lo que se encontró durante el assessment:
 
 | *Pod IP Subnet limitada*
 | Se encontró que se utiliza una subnet para los Pods con subnetting de /18 y hostPrefix: 24
-| La configuracion de Pod IP Subnet implica que en el cluster habran coo maximo 64 nodos y 256 pods por nodo como maximo
-| Validar que esta configuracion sea la deseada
+| La configuración de Pod IP Subnet implica que en el cluster habrán coo máximo 64 nodos y 256 pods por nodo como máximo
+| Validar que esta configuración sea la deseada
 
 | *Update channel establecido en 'stable'*
 | Se encontró que se utiliza el channel 'stable' para las actualizaciones del cluster, se puede pasar a 'eus'
 | Si el cluster queda suscripto al channel 'stable' 
-| Validar que esta configuracion sea la deseada
+| Validar que esta configuración sea la deseada
 
 |===
 
