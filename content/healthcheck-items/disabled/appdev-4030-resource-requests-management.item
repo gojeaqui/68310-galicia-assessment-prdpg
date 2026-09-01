@@ -25,8 +25,8 @@ check_definition:
         oc get resourcequota -A
   common_outcomes:
     - key: "advisory01"
-      scenario_description_short_text: "No se están utilizando LimitsRanges y ResourceQuotas"
-      description_long_text: "Si bien no se están utilizando LimitsRanges y ResourceQuotas, en este caso no es un problema porque se espera que corra una sola aplicación en el cluster y por lo tanto no tiene sentido ponerle limites"  # Consultant to describe limits and quotas.
+      scenario_description_short_text: "Se están utilizando ResourceQuotas"
+      description_long_text: "Se están estableciendo correctamente limites para los usuarios del cluster"  # Consultant to describe limits and quotas.
       impact_and_risk_text: ""
       remediation_text: ""
     - key: "changes_recommended01"
@@ -63,12 +63,3 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get limitrange -A
-    No resources found
-    ---
-
-    [openshift@bastion ~]$ oc get resourcequota -A
-    NAMESPACE                NAME                            AGE      REQUEST                                                              LIMIT
-    bna-trident-dmzprd01     trident-csi                     2y279d                                                                        
-    openshift-host-network   host-network-namespace-quotas   3y60d    count/daemonsets.apps: 0/0, count/deployments.apps: 0/0, pods: 0/0   limits.cpu: 0/0, limits.memory: 0/0
-    ---
