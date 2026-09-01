@@ -19,8 +19,6 @@ Resources
 [cols="h,1"]
 |===
 | Nombre | prdpg
-| Descripción | #TODO#
-| Ubicación Geográfica | #TODO#
 | ClusterVersion | 4.20.16
 | Update channel | stable-4.20 (#*NOTA*: Se puede pasar a 'eus-4.20'#)
 | Console URL | https://console-openshift-console.apps.paas-apps1-prdpg.bancogalicia.com.ar/dashboards
@@ -44,8 +42,11 @@ Resources
 
 Se encontró que se utiliza una subnet para los Pods con subnetting de /18 y hostPrefix: 24
 Al usar estos valores, la arquitectura de red del clúster quedará definida de la siguiente manera:
-- Máximo de Nodos: Máximo de 64 nodos en el clúster. (Se restan los bits del prefijo del host (24) menos los bits de la subred del clúster (18). $2^{(24-18)} = 2^6 = 64$ nodos)
-- Pods por Nodo: Cada nodo podrá alojar hasta 256 pods (incluyendo los pods de infraestructura). ($2^{(32-24)} = 2^8 = 256$ direcciones IP por nodo)
+
+* Máximo de Nodos: Máximo de 64 nodos en el clúster. (Se restan los bits del prefijo del host (24) menos los bits de la subred del clúster (18). $2^{(24-18)} = 2^6 = 64$ nodos)
+
+* Pods por Nodo: Cada nodo podrá alojar hasta 256 pods (incluyendo los pods de infraestructura). ($2^{(32-24)} = 2^8 = 256$ direcciones IP por nodo)
+
 Total de Pods en el Clúster: El límite total será de 16,384 pods ($64 \times 256$)
 
 == Operadores
@@ -149,3 +150,5 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods ($64 \times 
 | paas-apps1-prdpg-d7k25-worker-apps-2-rsthn |  16 |      94.29 Gi |     199.44 Gi |
 | paas-apps1-prdpg-d7k25-worker-apps-2-wssjf |  16 |      94.29 Gi |     199.44 Gi |
 |===
+
+#*NOTA*: Los nodos infra tienen 100 Gi de disco nomas#

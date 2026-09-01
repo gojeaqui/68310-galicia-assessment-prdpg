@@ -1,7 +1,7 @@
 version: v2
 check_definition:
   category_key: "Infrastructure"
-  subcategory_key: "storage"
+  subcategory_key: "Storage"
   severity_key: "Not defined"
   tags: []
   description: "ODF StorageCluster Component Check"

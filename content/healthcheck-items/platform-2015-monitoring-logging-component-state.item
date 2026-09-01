@@ -39,13 +39,13 @@ check_definition:
     impact_and_risk_text: ""
     remediation_text: "Se recomienda terminar de actualizar el stack de Logging una vez actualizado el Openshift a version 4.16 y dar de baja al ElasticSearch"
   - key: "changes_required01"
-    scenario_description_short_text: "Problemas en el stack de Logging (falta Operador Loki y tolerations de infra)"
-    description_long_text: "Se encontró un problema en el stack de Logging debido a que los collectors no levantaron en los nodos infra. Podrían estar faltando tolerations para permitir su ejecución en dichos nodos. Ademas no se encuentra desplegado el operador Loki"
+    scenario_description_short_text: "Problemas en el stack de Logging (tolerations de infra)"
+    description_long_text: "Se encontró un problema en el stack de Logging debido a que los collectors no levantaron en los nodos infra. Podrían estar faltando tolerations para permitir su ejecución en dichos nodos."
     impact_and_risk_text: "La falta de collectors en los nodos infra puede provocar una recolección incompleta de logs y la pérdida de información de auditoría y troubleshooting."
     remediation_text: "Revisar la configuración del stack de Logging y validar que los collectors cuenten con las tolerations necesarias para ejecutarse en los nodos infra."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: fail
+  status: changes_recommended
   common_outcome_key: "changes_required01"
   outcome_overrides:
       scenario_description_short_text: ""

@@ -1,7 +1,7 @@
 version: v2
 check_definition:
   category_key: "Platform"
-  subcategory_key: "none"
+  subcategory_key: "Storage"
   severity_key: "Not defined"
   tags: []
   tag_keys:
