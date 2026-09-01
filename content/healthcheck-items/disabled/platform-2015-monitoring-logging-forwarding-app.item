@@ -1,0 +1,206 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Security"
+  description: "Forward OpenShift application logs to external logging system"
+  references: 
+  - title: "Forwarding logs to external third-party logging systems"
+    url: "https://docs.openshift.com/container-platform/latest/logging/log_collection_forwarding/log-forwarding.html#log-forwarding-about-clf"
+  - title: "Understanding cluster logging"
+    url: "https://docs.openshift.com/container-platform/latest/logging/cluster-logging.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "survey"
+      question: "Does the organization require that application logs are sent to a logging system external to OpenShift?"
+    - type: "survey"
+      question: "Are app logs being forwarded to an external logging system?"
+    - type: "command"
+      question: "find out the forwarding configs in openshift-logging namespace"
+      command: |
+        # 'Review the output under "status" for fluentd pods, logs
+        oc get clusterlogging instance -n openshift-logging -o yaml
+        oc get clusterlogforwarder -n openshift-logging -o yaml
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Reenvío de logs configurado únicamente al Loki interno"
+    description_long_text: "El reenvío de logs está configurado para la canalización de aplicaciones de OpenShift y se envía únicamente al sistema Loki interno"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Log forwarding not configured"
+    description_long_text: "Log forwarding is not configured for the OpenShift application pipeline to an external logging system"
+    impact_and_risk_text: "An external logging system protects the confidentiality, integrity, and availability of application logs"
+    remediation_text: "Configure external log forwarding for application logs"
+    scenario_description_short_text: "Reenvío de logs configurado hacia un Loki externo"
+    description_long_text: "El reenvío de logs está configurado para reenviar los logs"
+    impact_and_risk_text: ""
+    remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "changes_recommended01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get clusterlogforwarders.observability.openshift.io -n openshift-logging collector -o yaml
+    apiVersion: observability.openshift.io/v1
+    kind: ClusterLogForwarder
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-wave: "50"
+        argocd.argoproj.io/tracking-id: paas-apps1-prdpg-logging-forwarder:observability.openshift.io/ClusterLogForwarder:openshift-logging/collector
+      creationTimestamp: "2026-06-30T20:04:01Z"
+      generation: 1
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: logging-forwarder
+        app.kubernetes.io/part-of: observability
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-prdpg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: prd
+        gitops.bancogalicia.com.ar/tier: high
+        helm.sh/chart: logging-forwarder-0.1.0
+      name: collector
+      namespace: openshift-logging
+      resourceVersion: "29879629"
+      uid: 2fd48730-e4b2-479c-9da3-4390b886cd83
+    spec:
+      filters:
+      - name: add-cluster-meta
+        openshiftLabels:
+          cluster: paas-apps1-prdpg
+          domain: apps
+          environment: prd
+          site: pg
+          tier: high
+        type: openshiftLabels
+      managementState: Managed
+      outputs:
+      - loki:
+          authentication:
+            token:
+              from: secret
+              secret:
+                key: token
+                name: loki-hub-credentials
+          labelKeys:
+          - log_type
+          - openshift.labels.cluster
+          - openshift.labels.environment
+          - openshift.labels.tier
+          - openshift.labels.domain
+          - kubernetes.host
+          url: https://logging-loki-openshift-logging.apps.paas-svc-prdpg.bancogalicia.com.ar/api/logs/v1/infrastructure
+        name: loki-hub-infrastructure
+        tls:
+          ca:
+            key: ca-bundle.crt
+            secretName: loki-hub-credentials
+        type: loki
+      - loki:
+          authentication:
+            token:
+              from: secret
+              secret:
+                key: token
+                name: loki-hub-credentials
+          labelKeys:
+          - log_type
+          - openshift.labels.cluster
+          - openshift.labels.environment
+          - openshift.labels.tier
+          - openshift.labels.domain
+          url: https://logging-loki-openshift-logging.apps.paas-svc-prdpg.bancogalicia.com.ar/api/logs/v1/audit
+        name: loki-hub-audit
+        tls:
+          ca:
+            key: ca-bundle.crt
+            secretName: loki-hub-credentials
+        type: loki
+      pipelines:
+      - filterRefs:
+        - add-cluster-meta
+        inputRefs:
+        - infrastructure
+        name: infrastructure-to-hub
+        outputRefs:
+        - loki-hub-infrastructure
+      - filterRefs:
+        - add-cluster-meta
+        inputRefs:
+        - audit
+        name: audit-to-hub
+        outputRefs:
+        - loki-hub-audit
+      serviceAccount:
+        name: logging-collector
+    status:
+      conditions:
+      - lastTransitionTime: "2026-06-30T20:04:05Z"
+        message: 'permitted to collect log types: [audit infrastructure]'
+        reason: ClusterRolesExist
+        status: "True"
+        type: observability.openshift.io/Authorized
+      - lastTransitionTime: "2026-06-30T20:04:05Z"
+        message: ""
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/Valid
+      - lastTransitionTime: "2026-07-21T07:49:07Z"
+        message: ""
+        reason: ReconciliationComplete
+        status: "True"
+        type: Ready
+      filterConditions:
+      - lastTransitionTime: "2026-06-30T20:04:05Z"
+        message: filter "add-cluster-meta" is valid
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/ValidFilter-add-cluster-meta
+      inputConditions:
+      - lastTransitionTime: "2026-08-10T15:47:56Z"
+        message: input "infrastructure" is valid
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/ValidInput-infrastructure
+      - lastTransitionTime: "2026-08-10T15:47:56Z"
+        message: input "audit" is valid
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/ValidInput-audit
+      outputConditions:
+      - lastTransitionTime: "2026-06-30T20:04:05Z"
+        message: output "loki-hub-infrastructure" is valid
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/ValidOutput-loki-hub-infrastructure
+      - lastTransitionTime: "2026-06-30T20:04:05Z"
+        message: output "loki-hub-audit" is valid
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/ValidOutput-loki-hub-audit
+      pipelineConditions:
+      - lastTransitionTime: "2026-06-30T20:04:05Z"
+        message: pipeline "infrastructure-to-hub" is valid
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/ValidPipeline-infrastructure-to-hub
+      - lastTransitionTime: "2026-06-30T20:04:05Z"
+        message: pipeline "audit-to-hub" is valid
+        reason: ValidationSuccess
+        status: "True"
+        type: observability.openshift.io/ValidPipeline-audit-to-hub

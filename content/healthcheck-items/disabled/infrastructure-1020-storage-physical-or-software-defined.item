@@ -1,0 +1,105 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "Software-Defined vs Physical Storage"
+  references: 
+  - title: "Understanding persistent storage"
+    url: "https://docs.openshift.com/container-platform/latest/storage/understanding-persistent-storage.html"
+  check_procedures:
+    - type: survey
+      question: "Is storage software-defined or physical storage?"
+    - type: survey
+      question: "What specific storage solution is being used (e.g., ODF, NetApp, Pure Storage)?"
+    - type: survey
+      question: "How is the storage redundancy configured?"
+    - type: survey
+      question: "Are there any known performance issues with the current storage setup?"
+    - type: survey
+      question: "How often is the storage configuration reviewed and updated?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Almacenamiento correctamente configurado"
+      description_long_text: "La solución de almacenamiento está configurada correctamente con una redundancia adecuada"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "El rendimiento del almacenamiento es óptimo"
+      description_long_text: "La configuración de almacenamiento actual funciona bien sin problemas informados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Revisión de necesidades de configuración de almacenamiento"
+      description_long_text: "La configuración de almacenamiento requiere revisión para un rendimiento óptimo"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración de almacenamiento de acuerdo con las mejores prácticas"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "La redundancia de almacenamiento necesita mejora"
+      description_long_text: "La configuración actual de redundancia de almacenamiento puede no cumplir con los requisitos de alta disponibilidad"
+      impact_and_risk_text: "La redundancia insuficiente puede conducir a la pérdida de datos o al tiempo de inactividad"
+      remediation_text: "Mejore la configuración de redundancia de almacenamiento para cumplir con los requisitos de disponibilidad"
+    - key: "changes_recommended03"
+      scenario_description_short_text: "Revisar la recomendación de la sección de CSI Storage respecto del 'nfs-subdir-external-provisioner'"
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "changes_recommended03"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar paas-apps1-prdpg]$ omc get sc -o yaml
+    apiVersion: v1
+    items:
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          argocd.argoproj.io/tracking-id: paas-apps1-prdpg-nfs-subdir-external-provisioner:storage.k8s.io/StorageClass:nfs-subdir-external-provisioner/ocs-storagecluster-cephfs
+        creationTimestamp: "2026-06-30T20:06:54Z"
+        labels:
+          app.kubernetes.io/instance: nfs-subdir-external-provisioner
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: nfs-subdir-external-provisioner
+          app.kubernetes.io/part-of: platform-base
+          helm.sh/chart: nfs-subdir-external-provisioner-4.0.18
+        name: ocs-storagecluster-cephfs
+        resourceVersion: "120733"
+        uid: fdbc14ff-dbd5-423c-8ac6-485845037aab
+      parameters:
+        archiveOnDelete: "true"
+        pathPattern: nfs-subdir-external-provisioner/${.PVC.namespace}-${.PVC.name}-${.PV.name}
+      provisioner: k8s-sigs.io/nfs-subdir-external-provisioner
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          storageclass.kubernetes.io/is-default-class: "true"
+        creationTimestamp: "2026-06-30T17:04:35Z"
+        labels:
+          netbackup.veritas.com/default-csi-filesystem-storage-class: "true"
+          netbackup.veritas.com/default-csi-storage-class: "true"
+        name: thin-csi
+        resourceVersion: "3735423"
+        uid: 44b8a3b8-d8f0-4a90-b95d-342e968b85e9
+      parameters:
+        StoragePolicyName: openshift-storage-policy-paas-apps1-prdpg-d7k25
+      provisioner: csi.vsphere.vmware.com
+      reclaimPolicy: Delete
+      volumeBindingMode: WaitForFirstConsumer
+    kind: List
