@@ -43,11 +43,11 @@ Resources
 Se encontró que se utiliza una subnet para los Pods con subnetting de /18 y hostPrefix: 24
 Al usar estos valores, la arquitectura de red del clúster quedará definida de la siguiente manera:
 
-* Máximo de Nodos: Máximo de 64 nodos en el clúster. (Se restan los bits del prefijo del host (24) menos los bits de la subred del clúster (18). $2^{(24-18)} = 2^6 = 64$ nodos)
+* Máximo de Nodos: Máximo de 64 nodos en el clúster. (Se restan los bits del prefijo del host (24) menos los bits de la subred del clúster (18). stem:[2^{(24-18)} = 2^6 = 64] nodos)
 
-* Pods por Nodo: Cada nodo podrá alojar hasta 256 pods (incluyendo los pods de infraestructura). ($2^{(32-24)} = 2^8 = 256$ direcciones IP por nodo)
+* Pods por Nodo: Cada nodo podrá alojar hasta 256 pods (incluyendo los pods de infraestructura). (stem:[2^{(32-24)} = 2^8 = 256] direcciones IP por nodo)
 
-Total de Pods en el Clúster: El límite total será de 16,384 pods ($64 \times 256$)
+Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \times 256])
 
 == Operadores
 
@@ -77,7 +77,7 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods ($64 \times 
 |packageserver|Package Server|0.0.1-snapshot
 |===
 
-#*NOTA*: No se observa que este instalado el Operador de Loki#
+#*NOTA*: Observamos que no esta instalado el Operador de Loki#
 
 == Storage
 
@@ -93,7 +93,7 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods ($64 \times 
 |thin-csi|csi.vsphere.vmware.com|Delete|WaitForFirstConsumer
 |===
 
-#*NOTA*: Hay una incongruencia entre el nombre del StorageClass 'ocs-storagecluster-cephfs' y el provisioner#
+#*NOTA*: Hay una incongruencia en el nombre del StorageClass 'ocs-storagecluster-cephfs' y el tipo de provisioner#
 
 === Persistent Volumes
 

@@ -28,7 +28,7 @@ check_definition:
     remediation_text: "Eliminar el auto aprovisionamiento del grupo system:authenticated:oauth."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: tbe
+  status: changes_recommended
   common_outcome_key: "recommend01"
   outcome_overrides:
       scenario_description_short_text: ""

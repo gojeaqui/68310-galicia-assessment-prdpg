@@ -1,0 +1,67 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Scheduling"
+  description: "OpenShift logging pods are scheduled on appropriate nodes"
+  references: 
+  - title: "Moving OpenShift Logging resources with node selectors"
+    url: "https://docs.openshift.com/container-platform/latest/observability/logging/scheduling_resources/logging-node-selectors.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "survey"
+      question: "Are the OpenShift logging pods scheduled on nodes that should not impact critical functions of the cluster?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Logging running on correct nodes"
+    description_long_text: "pods are running on nodes that are appropriately sized and not interfering with other OCP components"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Logging pods on wrong nodes"
+    description_long_text: "pods are running on nodes that may not be appropriately sized and may interfere with other OCP components"
+    impact_and_risk_text: "Logging can consume significant resources from the node it is running on and the underlying storage. It should be scheduled seperately from crtical OCP components such as etcd, api server and controllers. Depending on the level of load it may also need to be scheduled on dedicated nodes."
+    remediation_text: "Move the components to infrastructure nodes that can handle the logging loads."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    NAME                                       READY   STATUS    RESTARTS   AGE   IP             NODE                                         NOMINATED NODE   READINESS GATES
+    cluster-logging-operator-9577bff9c-qbdrj   1/1     Running   0          38d   10.128.23.10   paas-apps1-prdpg-d7k25-worker-apps-2-h2l5s   <none>           <none>
+    collector-26gfm                            1/1     Running   1          25d   10.128.31.10   paas-apps1-prdpg-d7k25-worker-apps-1-mk7b5   <none>           <none>
+    collector-4g7hm                            1/1     Running   1          25d   10.128.32.9    paas-apps1-prdpg-d7k25-worker-apps-1-xkljk   <none>           <none>
+    collector-4g8hq                            1/1     Running   1          25d   10.128.34.8    paas-apps1-prdpg-d7k25-worker-apps-2-q2257   <none>           <none>
+    collector-5bhzm                            1/1     Running   2          40d   10.128.21.8    paas-apps1-prdpg-d7k25-worker-apps-1-r5sv8   <none>           <none>
+    collector-9qsx4                            1/1     Running   2          40d   10.128.19.8    paas-apps1-prdpg-d7k25-worker-apps-0-mk4tr   <none>           <none>
+    collector-c2p2m                            1/1     Running   1          25d   10.128.37.8    paas-apps1-prdpg-d7k25-worker-apps-0-fvvpp   <none>           <none>
+    collector-d4mcf                            1/1     Running   1          62d   10.128.2.33    paas-apps1-prdpg-d7k25-master-2              <none>           <none>
+    collector-d7ndg                            1/1     Running   1          25d   10.128.33.8    paas-apps1-prdpg-d7k25-worker-apps-2-wssjf   <none>           <none>
+    collector-fhlqg                            1/1     Running   2          40d   10.128.17.8    paas-apps1-prdpg-d7k25-worker-apps-0-st8f6   <none>           <none>
+    collector-fm6dt                            1/1     Running   0          25d   10.128.26.10   paas-apps1-prdpg-d7k25-worker-apps-0-h2pxm   <none>           <none>
+    collector-ftmrk                            1/1     Running   2          40d   10.128.25.8    paas-apps1-prdpg-d7k25-worker-apps-2-4g7w6   <none>           <none>
+    collector-h757t                            1/1     Running   2          40d   10.128.23.8    paas-apps1-prdpg-d7k25-worker-apps-2-h2l5s   <none>           <none>
+    collector-lhz45                            1/1     Running   1          25d   10.128.30.8    paas-apps1-prdpg-d7k25-worker-apps-1-dt2jn   <none>           <none>
+    collector-llpnn                            1/1     Running   1          25d   10.128.35.9    paas-apps1-prdpg-d7k25-worker-apps-2-d4kg9   <none>           <none>
+    collector-mt2ld                            1/1     Running   1          25d   10.128.36.8    paas-apps1-prdpg-d7k25-worker-apps-0-h2wrj   <none>           <none>
+    collector-nfccz                            1/1     Running   1          62d   10.128.0.50    paas-apps1-prdpg-d7k25-master-0              <none>           <none>
+    collector-ptxm8                            1/1     Running   2          40d   10.128.24.8    paas-apps1-prdpg-d7k25-worker-apps-2-rsthn   <none>           <none>
+    collector-q7z8q                            1/1     Running   2          40d   10.128.22.8    paas-apps1-prdpg-d7k25-worker-apps-1-mbvjd   <none>           <none>
+    collector-sckfr                            1/1     Running   1          25d   10.128.38.10   paas-apps1-prdpg-d7k25-worker-apps-0-dnvzs   <none>           <none>
+    collector-snf9g                            1/1     Running   1          25d   10.128.29.10   paas-apps1-prdpg-d7k25-worker-apps-1-jm6rs   <none>           <none>
+    collector-v7s6w                            1/1     Running   1          62d   10.128.1.66    paas-apps1-prdpg-d7k25-master-1              <none>           <none>
