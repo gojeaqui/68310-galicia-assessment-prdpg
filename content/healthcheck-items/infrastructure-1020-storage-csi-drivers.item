@@ -60,7 +60,7 @@ check_definition:
       remediation_text: "Utilice en su lugar: Red Hat OpenShift Data Foundation (ODF) o Controladores CSI Certificados de un socio de almacenamiento certificado por Red Hat (por ejemplo, NetApp, Dell, HPE o Pure Storage) que admitan aprovisionamiento dinámico para sus respectivas matrices de almacenamiento."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: fail
+  status: changes_recommended
   common_outcome_key: "changes_recommended03"
   outcome_overrides:
       scenario_description_short_text: ""
