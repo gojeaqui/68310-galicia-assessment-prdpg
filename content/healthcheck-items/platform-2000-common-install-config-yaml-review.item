@@ -109,7 +109,7 @@ customer_environment_findings:
               user: ""
         publish: External
         pullSecret: ""
-        sshKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCyUMeGTqR1D7PnJhELlvQxxp/SueDW/LyWcI1YpSd5rzeqOtXlaqsUzfCa/HNz0LDSh2Sg1q93mLSCmeVKR7qmmD6ZyVNq43Wsrlb998790TKwxevuYVpa3sjtbMf5EqxhYRvfSZ70ms/lGLoasQcg+FhQieANCtXt6qS0KeSlTeq4qWz0PNzX7pWwlI5nYsPLKYW/9PEzmp0ph4MbIbIz0OBXGF6jFhtVy7Jwkni0MmeizJRvz//3FVMVIwRh9f5kpZHuzFWA2id5DPVB505iyWfkKH+R4fci09PN8uR9QE7TGURUc0AgE9JrJ1AiVKcXwzi8JAovwb8Lf5fHPUPusxUedUov4VEpWwE32rXpnDWWZYjERcUp8vUoEXg/233I69w95uyntCt4O/yuCa4i8V+YFz5906gmyjUJZe6QMfVt497CMXqXP1VhNz7nZpJbOxYnxTZtuY+aqP0Ss2CnkWje86nAAWXUxeQr96ng4Mq1/5iSarTZOTgIuU5Y9U=
+        sshKey: ssh-rsa XXX
           root@bastionacm.bancogalicia.com.ar
     kind: ConfigMap
     metadata:

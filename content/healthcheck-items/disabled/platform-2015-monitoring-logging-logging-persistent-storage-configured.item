@@ -41,7 +41,7 @@ check_definition:
     remediation_text: "Configure el almacenamiento persistente de Logging con almacenamiento respaldado por SSD/NVMe y asegúrese de que existan PVC para Loki"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: fail
+  status: N/A
   common_outcome_key: "changes_required01"
   outcome_overrides:
       scenario_description_short_text: ""
