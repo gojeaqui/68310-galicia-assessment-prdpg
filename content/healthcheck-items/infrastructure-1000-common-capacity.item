@@ -27,10 +27,10 @@ check_definition:
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "scenario2"
-    scenario_description_short_text: "Requisitos no cumplidos"
-    description_long_text: "Uno o más nodos no cumplen con los requisitos de CPU, memoria o almacenamiento local."
-    impact_and_risk_text: "No proporcionar a los nodos del clúster la cantidad adecuada de recursos podría provocar problemas de rendimiento si son demasiado pequeños o desperdicio de recursos si son demasiado grandes."
-    remediation_text: "Como organización, asegúrese de que los equipos de infraestructura, plataforma y aplicaciones colaboren para definir y documentar los requisitos de recursos para todas las cargas de trabajo. Aumente o reduzca la CPU, la memoria y el almacenamiento local para cumplir con los requisitos de la plataforma y de la carga de trabajo."
+    scenario_description_short_text: "Nodos de Infra con disco de 100Gi"
+    description_long_text: "Se observa en el listado de capacidad de nodos que los nodos de Infra tienen un disco de 100 Gi."
+    impact_and_risk_text: "Un tamaño de disco de 100Gi esta en el limite de lo recomendado y puede ocasionar problemas en los nodos."
+    remediation_text: "Se recomienda regenerar los MachineSet de infra con un tamaño de disco de 120Gi al menos"
   - key: "advisory01"
     scenario_description_short_text: "Mejores prácticas para la monitorización de recursos"
     description_long_text: "Asegure la monitorización y el análisis continuos del uso de recursos de los nodos"
@@ -38,8 +38,8 @@ check_definition:
     remediation_text: "Implemente soluciones de monitorización para rastrear y analizar las tendencias de uso de recursos de los nodos"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: pass
-  common_outcome_key: "scenario1"
+  status: changes_recommended
+  common_outcome_key: "scenario2"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
