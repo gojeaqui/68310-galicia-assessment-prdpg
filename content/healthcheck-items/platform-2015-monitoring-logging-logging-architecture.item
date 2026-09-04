@@ -11,6 +11,8 @@ check_definition:
   references: 
   - title: "Removing unused components if local cluster logging is unused"
     url: "https://docs.openshift.com/container-platform/latest/logging/log_collection_forwarding/cluster-logging-collector.html#cluster-logging-collector-limits_cluster-logging-collector"
+  - title: "Forward logs to a Red Hat Managed Loki running in a different cluster that collectors in RHOCP 4"
+    url: "https://access.redhat.com/solutions/7017738"
   check_procedures:
     - type: "survey"
       question: "Are logs from OpenShift sent to an external logging system?"

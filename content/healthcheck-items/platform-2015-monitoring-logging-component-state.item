@@ -226,6 +226,8 @@ customer_environment_findings:
         status: "True"
         type: observability.openshift.io/ValidPipeline-audit-to-hub
 
+    ---
+
     [guillermo@darkstar paas-apps1-prdpg]$ omc get deployment cluster-logging-operator -n openshift-logging -o jsonpath='{.status}' | jq
     {
       "availableReplicas": 1,
@@ -253,9 +255,13 @@ customer_environment_findings:
       "updatedReplicas": 1
     }
 
+    ---
+
     [guillermo@darkstar paas-apps1-prdpg]$ omc get replicaset -n openshift-logging
     NAME                                 DESIRED   CURRENT   READY   AGE
     cluster-logging-operator-9577bff9c   1         1         1       40d
+
+    ---
 
     [guillermo@darkstar paas-apps1-prdpg]$ omc get pods -n openshift-logging -o wide
     NAME                                       READY   STATUS    RESTARTS   AGE   IP             NODE                                         NOMINATED NODE   READINESS GATES
@@ -281,6 +287,8 @@ customer_environment_findings:
     collector-sckfr                            1/1     Running   1          4d    10.128.38.10   paas-apps1-prdpg-d7k25-worker-apps-0-dnvzs   <none>           <none>
     collector-snf9g                            1/1     Running   1          4d    10.128.29.10   paas-apps1-prdpg-d7k25-worker-apps-1-jm6rs   <none>           <none>
     collector-v7s6w                            1/1     Running   1          40d   10.128.1.66    paas-apps1-prdpg-d7k25-master-1              <none>           <none>
+
+    ---
 
     [guillermo@darkstar paas-apps1-prdpg]$ omc get nodes
     NAME                                         STATUS   ROLES                  AGE   VERSION

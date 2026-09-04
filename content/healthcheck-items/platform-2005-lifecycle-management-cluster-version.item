@@ -56,9 +56,9 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [guillermo@darkstar paas-apps1-prdpg]$ omc get clusterversion
+    [guillermo@darkstar paas-apps1-qapg]$ omc get clusterversion
     NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
-    version   4.20.16   True        False         2h58m   Error while reconciling 4.20.16: the cluster operator image-registry is not available
+    version   4.20.17   True        False         28m     Error while reconciling 4.20.17: ingress, machine-config has an unknown error: ClusterOperatorsDegraded
 
     ---
 

@@ -58,3 +58,6 @@ customer_environment_findings:
     insights                                      InsightsRecommendationActive                info       firing    13s   2        10 Aug 26 13:23 UTC
     general.rules                                 Watchdog                                    none       firing    11s   1        10 Aug 26 13:23 UTC
     openshift-kubernetes.rules                    ClusterMonitoringOperatorDeprecatedConfig   info       firing    11s   1        07 Aug 26 16:01 UTC
+
+# Estas alertas son importantes:
+# - PodStartupStorageOperationsFailing (Pods can't start because {{ $labels.operation_name }} of volume plugin)
