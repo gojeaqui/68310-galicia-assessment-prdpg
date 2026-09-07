@@ -83,4 +83,9 @@ A continuación se deja un resumen de lo que se encontró durante el assessment:
 | Un tamaño de disco de 100Gi esta en el limite de lo recomendado y puede ocasionar problemas en los nodos.
 | Se recomienda regenerar los MachineSet de infra con un tamaño de disco de 120Gi al menos
 
+| *Auto aprovisionamiento de Proyectos habilitado*
+| El auto aprovisionamiento está habilitado para system:authenticated:oauth. Debe deshabilitarse en el entorno de producción para evitar la creación incontrolada de espacios de nombres.
+| Permitir el auto aprovisionamiento a usuarios autenticados reduce el control sobre la creación de proyectos.
+| Eliminar el auto aprovisionamiento del grupo system:authenticated:oauth.
+
 |===
