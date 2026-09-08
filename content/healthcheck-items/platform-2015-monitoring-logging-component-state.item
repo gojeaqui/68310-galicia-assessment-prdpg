@@ -57,23 +57,26 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [guillermo@darkstar paas-apps1-prdpg]$ omc get csv -A --no-headers | awk '{print $2}' | sort -u
+    [guillermo@darkstar paas1-prdpg]$ omc get csv -A --no-headers | awk '{print $2}' | sort -u
     3scale-operator.v0.13.4
     apicast-operator.v0.13.4
     cert-manager-operator.v1.18.1
     cluster-logging.v6.5.1
+    datagrid-operator.v8.6.6
     openshift-external-secrets-operator.v1.2.0
     packageserver
 
     ---
 
-    [guillermo@darkstar paas-apps1-prdpg]$ omc get sub -A
+    [guillermo@darkstar paas1-prdpg]$ omc get sub -A
     NAMESPACE                             NAME                                  PACKAGE                               SOURCE             CHANNEL
     amp                                   3scale-operator                       3scale-operator                       redhat-operators   threescale-2.16
     amp                                   apicast-operator                      apicast-operator                      redhat-operators   threescale-2.16
     cert-manager-operator                 openshift-cert-manager-operator       openshift-cert-manager-operator       redhat-operators   stable-v1.18
+    dg8x-datagridoperator-prd             data-grid-operator                    datagrid                              redhat-operators   stable
     openshift-external-secrets-operator   openshift-external-secrets-operator   openshift-external-secrets-operator   redhat-operators   stable-v1
     openshift-logging                     cluster-logging                       cluster-logging                       redhat-operators   stable-6.5
+    tytm-middleware-prd                   datagrid-operator                     datagrid                              redhat-operators   stable
 
     ---
 

@@ -48,16 +48,12 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [guillermo@darkstar paas-apps1-prdpg]$ omc prom rules -s firing,pending -o wide
-    GROUP                                         RULE                                        SEVERITY   STATE     AGE   ALERTS   ACTIVE SINCE
-    storage-operations.rules                      PodStartupStorageOperationsFailing          info       pending   2s    1        10 Aug 26 15:45 UTC
-    cluster-operators                             ClusterOperatorDown                         critical   firing    5s    1        20 Jul 26 08:13 UTC
-    cluster-operators                             ClusterOperatorDegraded                     warning    firing    5s    2        20 Jul 26 08:13 UTC
-    cluster-version                               UpdateAvailable                             info       firing    21s   1        10 Aug 26 13:23 UTC
-    openshift-ingress-to-route-controller.rules   IngressWithoutClassName                     warning    firing    19s   4        07 Aug 26 16:11 UTC
-    insights                                      InsightsRecommendationActive                info       firing    13s   2        10 Aug 26 13:23 UTC
-    general.rules                                 Watchdog                                    none       firing    11s   1        10 Aug 26 13:23 UTC
-    openshift-kubernetes.rules                    ClusterMonitoringOperatorDeprecatedConfig   info       firing    11s   1        07 Aug 26 16:01 UTC
-
-# Estas alertas son importantes:
-# - PodStartupStorageOperationsFailing (Pods can't start because {{ $labels.operation_name }} of volume plugin)
+    [guillermo@darkstar paas1-prdpg]$ omc prom rules -s firing,pending -o wide
+    GROUP                                         RULE                                        SEVERITY   STATE    AGE   ALERTS   ACTIVE SINCE
+    cluster-operators                             ClusterOperatorDown                         critical   firing   2s    1        20 Jul 26 08:13 UTC
+    cluster-operators                             ClusterOperatorDegraded                     warning    firing   2s    2        20 Jul 26 08:13 UTC
+    cluster-version                               UpdateAvailable                             info       firing   18s   1        25 Aug 26 09:32 UTC
+    openshift-ingress-to-route-controller.rules   IngressWithoutClassName                     warning    firing   16s   4        30 Aug 26 11:39 UTC
+    insights                                      InsightsRecommendationActive                info       firing   10s   3        25 Aug 26 09:32 UTC
+    general.rules                                 Watchdog                                    none       firing   8s    1        25 Aug 26 09:31 UTC
+    openshift-kubernetes.rules                    ClusterMonitoringOperatorDeprecatedConfig   info       firing   8s    1        07 Aug 26 16:01 UTC
