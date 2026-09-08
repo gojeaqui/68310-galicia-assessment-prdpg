@@ -18,7 +18,7 @@ Resources
 
 [cols="h,1"]
 |===
-| Nombre | prdpg
+| Nombre | paas-apps1-prdpg
 | ClusterVersion | 4.20.16
 | Update channel | stable-4.20 (#*NOTA*: Se puede pasar a 'eus-4.20'#)
 | Console URL | https://console-openshift-console.apps.paas-apps1-prdpg.bancogalicia.com.ar/dashboards
