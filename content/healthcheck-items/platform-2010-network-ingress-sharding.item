@@ -21,6 +21,10 @@ check_definition:
       question: "Are there any plans to scale the number of shards in the future?"
     - type: "survey"
       question: "Are there any monitoring or alerting mechanisms in place for the ingress shards?"
+  check_procedures:
+    - type: command
+      command: |
+        oc get ingresscontroller --all-namespaces -o yaml
   common_outcomes:
     - key: "advisory01"
       scenario_description_short_text: "Hay un Ingress Sharding configurado"

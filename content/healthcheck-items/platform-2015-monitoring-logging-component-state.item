@@ -19,19 +19,13 @@ check_definition:
     - type: "command"
       question: ""
       command: |
-        # 'Review the output under "status" for fluentd pods, logstore and visualization. Take note of any components in a not-ready status and details around the condition messages'
-        oc get clusterlogging instance -n openshift-logging -o yaml
-        oc get clusterlogforwarder -n openshift-logging -o yaml
-
-        # 'Review the output of the operator and the associated replicaset for errors'
-        oc get deployment cluster-logging-operator -n openshift-logging -o yaml
+        oc get csv -A --no-headers | awk '{print $2}' | sort -u
+        oc get sub -A
+        oc get clusterlogforwarders.observability.openshift.io -n openshift-logging collector -o yaml
+        oc get deployment cluster-logging-operator -n openshift-logging -o jsonpath='{.status}' | jq
         oc get replicaset -n openshift-logging
-
-        # 'Take note of the pod names and use in the command below'
-        oc get pods -n openshift-logging
-
-        # 'Review the events in namespace "openshift-logging"'
-        oc get events -n openshift-logging|grep -v Normal
+        oc get pods -n openshift-logging -o wide
+        oc get nodes
   common_outcomes:
   - key: "no_change01"
     scenario_description_short_text: "El estado del stack de Logging es verde"

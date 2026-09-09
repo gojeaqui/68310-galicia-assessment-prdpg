@@ -14,7 +14,7 @@ check_definition:
   check_procedures:
     - type: "command"
       command: |
-        oc describe machineconfig -A
+        oc get mc -A
   common_outcomes:
     - key: "advisory01"
       scenario_description_short_text: "No se observan problemas con los MachineConfig" 

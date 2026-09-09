@@ -13,7 +13,7 @@ check_definition:
   check_procedures:
     - type: command
       command: |
-        oc describe cm -n kube-system cluster-config-v1
+        oc get cm -n kube-system cluster-config-v1 -o yaml
   common_outcomes:
     - key: "advisory01"
       scenario_description_short_text: "Configuración de 'install-config.yaml' generalmente correcta" 

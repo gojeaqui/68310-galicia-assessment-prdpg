@@ -23,6 +23,7 @@ check_definition:
       command: |
           oc get sc
           oc get pvc -n openshift-monitoring
+          oc get pv | grep monitoring
   common_outcomes:
   - key: "no_change01"
     scenario_description_short_text: "Monitoreo de clúster configurado con almacenamiento persistente"

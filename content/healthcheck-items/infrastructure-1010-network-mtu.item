@@ -11,7 +11,7 @@ check_definition:
   check_procedures:
     - type: "command"
       command: |
-          oc describe network.config cluster
+          oc get network.config cluster -o yaml
     - type: "survey"
       question: "What is the current MTU setting for the physical network?"
     - type: "survey"

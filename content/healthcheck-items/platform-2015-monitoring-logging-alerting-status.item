@@ -20,9 +20,9 @@ check_definition:
       question: "is the cluster sending alerts?"
     - type: "survey"
       question: "Are all the pods mounted in openshift-monitoring namespace running fine or do you see broken pods?"
-    #- type: "command"
-    #  command: |
-    #    omc prom rules -s firing,pending -o wide
+    - type: "command"
+      command: |
+        oc prom rules -s firing,pending -o wide
   common_outcomes:
   - key: "no_change01"
     scenario_description_short_text: "Openshift alerting is configured"

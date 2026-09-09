@@ -13,7 +13,7 @@ check_definition:
   check_procedures:
     - type: "command"
       command: |
-        oc describe networkpolicy --all-namespaces
+        oc get networkpolicy -A
   common_outcomes:
     - key: "advisory01"
       scenario_description_short_text: "Se utilizan NetworkPolicies"

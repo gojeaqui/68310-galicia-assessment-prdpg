@@ -15,7 +15,7 @@ check_definition:
   check_procedures:
     - type: "command"
       command: |
-        oc describe proxy/cluster
+        oc get proxy cluster -o yaml
   common_outcomes:
   - key: "no_change01"
     scenario_description_short_text: "El proxy está configurado según las especificaciones del cliente."

@@ -19,7 +19,8 @@ check_definition:
       - "verify the object in the UI"
     - type: "command"
       command: |
-        oc describe scc restricted
+        oc get scc
+        oc get scc restricted -o yaml
   common_outcomes:
   - key: "nochange_01"
     scenario_description_short_text: "La configuración predeterminada de SCC está restringida."

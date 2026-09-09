@@ -25,7 +25,7 @@ check_definition:
       question: "How often is the proxy configuration reviewed and updated?"
     - type: command
       command: |
-        oc describe proxy
+        oc get proxy -o yaml
   common_outcomes:
     - key: "advisory01"
       scenario_description_short_text: "Information Only"
