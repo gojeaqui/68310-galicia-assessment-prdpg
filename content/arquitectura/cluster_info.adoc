@@ -95,6 +95,51 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \t
 
 #*NOTA*: El Cluster Operator 'image-registry' esta degradado#
 
+
+== Alertas
+
+Reglas de Prometheus en estado firing o pending (`omc prom rules -s firing,pending -o wide`).
+
+[options="header"]
+|===
+|GROUP|RULE|SEVERITY|STATE|AGE|ALERTS|ACTIVE SINCE
+|cluster-operators|ClusterOperatorDown|critical|firing|2s|1|20 Jul 26 08:13 UTC
+|cluster-operators|ClusterOperatorDegraded|warning|firing|2s|2|20 Jul 26 08:13 UTC
+|cluster-version|UpdateAvailable|info|firing|18s|1|25 Aug 26 09:32 UTC
+|openshift-ingress-to-route-controller.rules|IngressWithoutClassName|warning|firing|16s|4|30 Aug 26 11:39 UTC
+|insights|InsightsRecommendationActive|info|firing|10s|3|25 Aug 26 09:32 UTC
+|general.rules|Watchdog|none|firing|8s|1|25 Aug 26 09:31 UTC
+|openshift-kubernetes.rules|ClusterMonitoringOperatorDeprecatedConfig|info|firing|8s|1|07 Aug 26 16:01 UTC
+|===
+
+== ETCD
+
+=== Estado
+
+Estado de los miembros de etcd (`omc etcd status`).
+
+[options="header"]
+|===
+|ENDPOINT|ID|VERSION|DB SIZE/IN USE|NOT USED|IS LEADER|IS LEARNER|RAFT TERM|RAFT INDEX|RAFT APPLIED INDEX|ERRORS
+|https://10.254.38.11:2379|2ff78a176ba33080|3.5.26|294 MB/216 MB|27%|false|false|14|130557801|130557801|
+|https://10.254.38.13:2379|446f77b4108db42f|3.5.26|273 MB/216 MB|21%|false|false|14|130557802|130557802|
+|https://10.254.38.12:2379|ca8b439a7b478d65|3.5.26|276 MB/216 MB|22%|true|false|14|130557802|130557802|
+|===
+
+Métricas de rendimiento de etcd obtenidas desde el monitoring del clúster (ventana de 30 minutos).
+
+=== Disk Backend Commit Duration
+
+Percentil 99 de la duración de commit en disco de etcd (`etcd_disk_backend_commit_duration_seconds`).
+
+image::etcd-disk_paas-apps1-prdpg.jpg[pdfwidth=80%]
+
+=== Network Peer Round Trip Time
+
+Percentil 99 del tiempo de ida y vuelta entre peers de etcd (`etcd_network_peer_round_trip_time_seconds`).
+
+image::etcd-net_paas-apps1-prdpg.jpg[pdfwidth=80%]
+
 == Machine Config Pools
 
 // omc get mcp
